@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  metal:use-macro="context/@@groupserver_layout/page">
+  <head>
+    <title metal:fill-slot="title">
+      <span tal:replace="string:${view/title}: ${view/siteInfo/get_name}">
+        Join and Leave Log for Group Name: Site Name
+      </span>
+    </title>
+  </head>
+  <body>
+    <tal:block metal:fill-slot="body">
+      <h1 tal:content="view/title">Join and Leave Log for Group Name</h1>
+      <div tal:repeat="year joinedYears">
+        <tal:block 
+          define="n repeat/year/number;
+            odd python:n%2;
+            months python:view.joinedMonths(year)">
+          <tal:block repeat="month months">
+            <span
+              tal:condition="repeat/month/first" 
+              tal:content="view/membersInfo/fullMemberCount"/> members:
+            <span tal:content="python:len(months.get(month))"/> joined
+          </tal:block> 
+        </tal:block>
+      </div>
+    </tal:block>
+  </body>
+</html>
+
