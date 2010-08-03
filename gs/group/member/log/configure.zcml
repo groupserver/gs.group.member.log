@@ -8,6 +8,7 @@
     for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="log.html"
     class=".log.JoinAndLeaveLog"
+    template="browser/templates/standard.pt"
     permission="zope2.Public"/>
 
 </configure>

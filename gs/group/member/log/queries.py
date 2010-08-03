@@ -8,36 +8,43 @@ from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
 class JoinLeaveQuery(object):
     
     def __init__(self, context, da):
-        self.auditEventTable = da.createTable('audit')
+        self.auditEventTable = da.createTable('audit_event')
     
-    def get_group_join_events(self, group_id):
+    def group_join_leave_events(self, group_id):
         aet = self.auditEventTable
-        s = aet.select([
-          sa.extract('year',  aet.c.date).label('year'),
-          sa.extract('month', aet.c.date).label('month'),
-          aet.c.user_id,
+#        SELECT EXTRACT(year FROM event_date) AS year, 
+#          EXTRACT(month FROM event_date) AS month, 
+#          subsystem, event_date, instance_user_id, user_id 
+#        FROM audit_event 
+#        WHERE 
+#          ((subsystem = 'gs.group.member.join' AND event_code = '1')
+#           OR
+#           (subsystem = 'gs.group.member.leave' AND event_code = '1'))
+#          AND group_id = 'example_group';
+        s = sa.select([
+          sa.extract('year', aet.c.event_date).label('year'),
+          sa.extract('month', aet.c.event_date).label('month'),
+          aet.c.subsystem,
+          aet.c.event_date,
           aet.c.instance_user_id,
-          aet.c.group_id,
-          aet.c.instanceDatum,
-          aet.c.supplementaryDatum
+          aet.c.user_id
         ])
-        s.append_whereclause(aet.c.subsystem == JOIN_SUBSYSTEM)
-        s.append_whereclause(aet.c.code == JOIN)
+        joinClauses = ((aet.c.subsystem == JOIN_SUBSYSTEM) & (aet.c.event_code == JOIN))
+        leaveClauses = ((aet.c.subsystem == LEAVE_SUBSYSTEM) & (aet.c.event_code == LEAVE))
+        s.append_whereclause(joinClauses | leaveClauses)
         s.append_whereclause(aet.c.group_id == group_id)
-        s.group_by('year', 'month', aet.c.group_id)
-        s.order_by(sa.desc('year'), sa.desc('month'), aet.c.group_id)
-    
+        
         r = s.execute()
-        retval = []
+        retval = {}
         if r.rowcount:
             retval = [{
-              'year':                int(x['year']),
-              'month':               int(x['month']),
-              'user_id':             x['user_id'],
-              'instance_user_id':    x['instance_user_id'],
-              'group_id':            x['group_id'],
-              'instanceDatum':       x['instance_datum'],
-              'supplementaryDatum':  x['supplementary_datum']} for x in r]
+              'year': row['year'],
+              'month': row['month'],
+              'date': row['event_date'],
+              'subsystem': row['subsystem'],
+              'user_id': row['instance_user_id'],
+              'admin_id': row['user_id']
+            } for row in r ]
         assert type(retval) == list
         return retval
 
