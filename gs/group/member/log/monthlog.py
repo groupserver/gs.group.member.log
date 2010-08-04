@@ -6,7 +6,8 @@ from Products.XWFCore.XWFUtils import munge_date
 from Products.CustomUserFolder.userinfo import userInfo_to_anchor
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
 from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
-from gs.group.member.log.interfaces import IMonthLog, IJoinEvent, ILeaveEvent
+from gs.group.member.log.interfaces import IMonthLog
+from gs.group.member.log.interfaces import IJoinEvent, ILeaveEvent
 
 class MonthLog(object):
     implements(IMonthLog)
@@ -17,17 +18,16 @@ class MonthLog(object):
     
     def __init__(self, groupInfo, year, month, numMembersMonthEnd, events):
         self.groupInfo = groupInfo
-        self.label = date(year, month, 1).strftime('%B %Y')
-        
         self.year = year
         self.month = month
         self.events = events
         self.numMembersMonthEnd = numMembersMonthEnd
+        self.label = date(year, month, 1).strftime('%B %Y')
         self.__numMembersMonthStart = None
         self.__joinEvents = self.__leaveEvents = self.__allEvents = None
 
     def __nonzero__(self):
-        return self.events
+        return bool(self.events)
 
     def __bool__(self):
         return self.__nonzero__()
@@ -73,7 +73,7 @@ class MonthLog(object):
     @property
     def allEvents(self):
         if self.__allEvents == None:
-            allEvents = self.joinEvents+self.leaveEvents
+            allEvents = self.joinEvents + self.leaveEvents
             allEvents.sort(key=lambda e: e.date, reverse=True)
             self.__allEvents = allEvents
         return self.__allEvents
@@ -85,11 +85,11 @@ class JoinEvent(object):
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
         self.userInfo = \
-          createObject('groupserver.UserFromId', 
+          createObject('groupserver.UserFromId',
             self.groupInfo.groupObj, eDict['user_id'])
         self.date = eDict['date']
         self.addingUserInfo = \
-          createObject('groupserver.UserFromId', 
+          createObject('groupserver.UserFromId',
             self.groupInfo.groupObj, eDict['admin_id'])
         
     @property
@@ -97,7 +97,7 @@ class JoinEvent(object):
         retval = u'%s joined' % \
           userInfo_to_anchor(self.userInfo)
         if not(self.addingUserInfo.anonymous) and\
-          (self.addingUserInfo.id!=self.userInfo.id):
+          (self.addingUserInfo.id != self.userInfo.id):
             retval = u'%s &#8212; invited by %s' % \
               (retval, userInfo_to_anchor(self.addingUserInfo))              
         retval = u'%s (%s)' % \
@@ -110,11 +110,11 @@ class LeaveEvent(object):
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
         self.userInfo = \
-          createObject('groupserver.UserFromId', 
+          createObject('groupserver.UserFromId',
             self.groupInfo.groupObj, eDict['user_id'])
         self.date = eDict['date']
         self.removingUserInfo = \
-          createObject('groupserver.UserFromId', 
+          createObject('groupserver.UserFromId',
             self.groupInfo.groupObj, eDict['admin_id'])
         
     @property
@@ -122,7 +122,7 @@ class LeaveEvent(object):
         retval = u'%s left' % \
           userInfo_to_anchor(self.userInfo)
         if not(self.removingUserInfo.anonymous) and\
-          self.removingUserInfo.id!=self.userInfo.id:
+          self.removingUserInfo.id != self.userInfo.id:
             retval = u'%s &#8212; removed by %s' % \
               (retval, userInfo_to_anchor(self.removingUserInfo))              
         retval = u'%s (%s)' % \

@@ -7,6 +7,7 @@
     numMembersJoined monthLog/numMembersJoined;
     allEvents monthLog/allEvents">
     <div id="#" class="disclosureWidget"
+      tal:condition="monthLog"
       tal:attributes="id string:${year}-${month}">
       <h4 tal:content="label">August 2010</h4>
       <p>
@@ -20,6 +21,16 @@
           <span tal:replace="structure event/xhtml"/>
         </li>
       </ul>
+    </div>
+    <div id="#"
+      tal:condition="not:monthLog"
+      tal:attributes="id string:${year}-${month}">
+      <h4 tal:content="label">August 2010</h4>
+      <p>
+        <span tal:replace="numMembersMonthEnd"/> members:
+        <span tal:replace="numMembersLeft"/> left,
+        <span tal:replace="numMembersJoined"/> joined.
+      </p>
     </div>
   </tal:block>
 </tal:block>

@@ -36,15 +36,10 @@ class LogContentProvider(object):
 
     @property
     def isAdmin(self):
-        """Is Admin
-        
-        RETURNS
-          True if the viewing user is a group administrator.
-        """
-#        TODO:
-#          Get site administrators in there too.    
         viewingUserInfo = createObject('groupserver.LoggedInUser', self.context)
-        retval = (viewingUserInfo.id in [ a.id for a in self.groupInfo.group_admins ])
+        isGroupAdmin = (viewingUserInfo.id in [ a.id for a in self.groupInfo.group_admins ])
+        isSiteAdmin = (viewingUserInfo.id in [ a.id for a in self.groupInfo.site_admins ])
+        retval = (isGroupAdmin or isSiteAdmin)
         assert type(retval) == bool
         return retval
 
