@@ -12,9 +12,10 @@
       <h4 tal:content="label">August 2010</h4>
       <p>
         <a href="#" class="disclosureButton">
-          <span tal:replace="numMembersMonthEnd"/> members:
+          <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
+            or '%d members' % numMembersMonthEnd"/>:
           <span tal:replace="numMembersLeft"/> left,
-          <span tal:replace="numMembersJoined"/> joined.</a>
+          <span tal:replace="numMembersJoined"/> joined</a>
       </p>
       <ul class="disclosureShowHide" style="display:none;">
         <tal:block 
@@ -27,9 +28,10 @@
       tal:attributes="id string:${year}-${month}">
       <h4 tal:content="label">August 2010</h4>
       <p>
-        <span tal:replace="numMembersMonthEnd"/> members:
+        <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
+            or '%d members' % numMembersMonthEnd"/>
         <span tal:replace="numMembersLeft"/> left,
-        <span tal:replace="numMembersJoined"/> joined.
+        <span tal:replace="numMembersJoined"/> joined
       </p>
     </div>
   </tal:block>

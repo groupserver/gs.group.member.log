@@ -34,8 +34,8 @@ class MonthLog(object):
 
     @property
     def numMembersMonthStart(self):
-        return (self.numMembersMonthEnd + \
-                self.numMembersJoined - \
+        return (self.numMembersMonthEnd - \
+                self.numMembersJoined + \
                 self.numMembersLeft)
 
     @property
