@@ -1,7 +1,7 @@
 # coding=utf-8
 from zope.interface import Attribute
 from zope.interface.interface import Interface
-from zope.schema import Date, Dict, Int, List
+from zope.schema import Date, Dict, Int, List, Text
 
 class IJoinAndLeaveLog(Interface):
     """ A class which collates all the joining and leaving
@@ -78,5 +78,13 @@ class ILeftMember(Interface):
       description=u'The joining date',
       required=True)
     removingUser = Attribute("""Optional: The user who removed the member from the group""")
+    
+class ILogContentProvider(Interface):
+    """The content provider for the group membership log """
+    log = Attribute("""A JoinAndLeaveLog instance """)
+    pageTemplateFileName = Text(title=u"Page Template File Name",
+      description=u'The name of the ZPT file that is used to render the log.',
+      required=False,
+      default=u"browser/templates/standardView.pt")
     
     

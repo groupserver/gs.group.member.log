@@ -14,4 +14,3 @@ class JoinAndLeaveLogView(BrowserView):
         self.siteInfo = createObject('groupserver.SiteInfo', group)
         self.log = JoinAndLeaveLog(self.groupInfo)
         self.title = 'Join and Leave Log for %s' % self.groupInfo.name
-    

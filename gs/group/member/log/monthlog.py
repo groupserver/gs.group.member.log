@@ -1,4 +1,5 @@
 # coding=utf-8
+from datetime import date
 from zope.interface import implements
 from zope.component import createObject
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
@@ -16,6 +17,7 @@ class MonthLog(object):
         self.groupInfo = groupInfo
         self.year = year
         self.month = month
+        self.label = date(year, month, 1).strftime('%B %Y')
         self.numMembersMonthEnd = numMembersMonthEnd
         self.events = events
         self.joinedMembers = events.get(JOIN_SUBSYSTEM, [])

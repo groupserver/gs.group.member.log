@@ -12,16 +12,7 @@
   <body>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/title">Join and Leave Log for Group Name</h1>
-      <div tal:repeat="log view/log/monthLogs">
-        <p>
-          <strong><span tal:replace="log/year"/> <span tal:replace="log/month"/></strong>
-        </p>
-        <p>
-          <span tal:replace="log/numMembersMonthEnd"/> members:
-          <span tal:replace="log/numMembersLeft"/> left,
-          <span tal:replace="log/numMembersJoined"/> joined.
-        </p>
-      </div>
+      <div tal:replace="structure provider:gs.group.member.log.LogContentProvider"/>
     </tal:block>
   </body>
 </html>
