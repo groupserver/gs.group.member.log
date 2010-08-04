@@ -1,9 +1,25 @@
-<h2>ADMIN VIEW</h2>
-<div tal:repeat="monthLog options/log/monthLogs">
-  <h4 tal:content="monthLog/label">August 2010</h4>
-  <p>
-    <span tal:replace="monthLog/numMembersMonthEnd"/> members:
-    <span tal:replace="monthLog/numMembersLeft"/> left,
-    <span tal:replace="monthLog/numMembersJoined"/> joined.
-  </p>
-</div>
+<tal:block repeat="monthLog options/log/monthLogs">
+  <tal:block define="year monthLog/year;
+    month monthLog/month;
+    label monthLog/label;
+    numMembersMonthEnd monthLog/numMembersMonthEnd;
+    numMembersLeft monthLog/numMembersLeft;
+    numMembersJoined monthLog/numMembersJoined;
+    allEvents monthLog/allEvents">
+    <div id="#" class="disclosureWidget"
+      tal:attributes="id string:${year}-${month}">
+      <h4 tal:content="label">August 2010</h4>
+      <p>
+        <a href="#" class="disclosureButton">
+          <span tal:replace="numMembersMonthEnd"/> members:
+          <span tal:replace="numMembersLeft"/> left,
+          <span tal:replace="numMembersJoined"/> joined.</a>
+      </p>
+      <ul class="disclosureShowHide" style="display:none;">
+        <li tal:repeat="event allEvents">
+          <span tal:replace="structure event/xhtml"/>
+        </li>
+      </ul>
+    </div>
+  </tal:block>
+</tal:block>

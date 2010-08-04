@@ -43,14 +43,14 @@ class IMonthLog(Interface):
       description=u'A dictionary with two keys: one with a list of '\
         'joining events, the other with a list of leaving events',
       required=False)
-    joinedMembers = List(title=u'Joined Members',
-      description=u'A list of JoinedMember objects who joined during the month',
+    joinEvents = List(title=u'Join Events',
+      description=u'A list of join events for the month',
       required=False)
     numMembersJoined = Int(title=u'Number of Members Joined',
       description=u'The number of members who joined during the month',
       required=False)
-    leftMembers = List(title=u'Left Members',
-      description=u'A list of LeftMember objects who left during the month',
+    leaveEvents = List(title=u'Leave Events',
+      description=u'A list of leave events for the month',
       required=False)
     numMembersLeft = Int(title=u'Number of Members Left',
       description=u'The number of members who left during the month',
@@ -59,7 +59,7 @@ class IMonthLog(Interface):
       description=u'The number of members at the start of the month',
       required=False)
     
-class IJoinedMember(Interface):
+class IJoinEvent(Interface):
     """ Information about a joining event.
     """
     userInfo = Attribute("""A userInfo instance""")
@@ -67,9 +67,12 @@ class IJoinedMember(Interface):
     eventDate = Date(title=u'Event Date',
       description=u'The joining date',
       required=True)
-    addingUser = Attribute("""Optional: The user who added the member to the group""")
+    addingUserInfo = Attribute("""Optional: The user who added the member to the group""")
+    xhtml = Text(title=u'XHTML',
+      description=u'XHTML description of event',
+      required=True)
     
-class ILeftMember(Interface):
+class ILeaveEvent(Interface):
     """ Information about a leaving event.
     """
     userInfo = Attribute("""A userInfo instance""")
@@ -77,7 +80,10 @@ class ILeftMember(Interface):
     eventDate = Date(title=u'Event Date',
       description=u'The joining date',
       required=True)
-    removingUser = Attribute("""Optional: The user who removed the member from the group""")
+    removingUserInfo = Attribute("""Optional: The user who removed the member from the group""")
+    xhtml = Text(title=u'XHTML',
+      description=u'XHTML description of event',
+      required=True)
     
 class ILogContentProvider(Interface):
     """The content provider for the group membership log """

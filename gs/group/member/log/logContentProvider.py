@@ -40,9 +40,9 @@ class LogContentProvider(object):
         
         RETURNS
           True if the viewing user is a group administrator.
-        TODO
-          Get site administrators in there too.
-        """    
+        """
+#        TODO:
+#          Get site administrators in there too.    
         viewingUserInfo = createObject('groupserver.LoggedInUser', self.context)
         retval = (viewingUserInfo.id in [ a.id for a in self.groupInfo.group_admins ])
         assert type(retval) == bool
