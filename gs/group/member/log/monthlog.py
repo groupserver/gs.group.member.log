@@ -94,8 +94,9 @@ class JoinEvent(object):
         
     @property
     def xhtml(self):
-        retval = u'%s joined' % \
-          userInfo_to_anchor(self.userInfo)
+        cssClass = u'join-event'
+        retval = u'<li class="%s">%s joined' % \
+          (cssClass, userInfo_to_anchor(self.userInfo))
         if not(self.addingUserInfo.anonymous) and\
           (self.addingUserInfo.id != self.userInfo.id):
             retval = u'%s &#8212; invited by %s' % \
@@ -119,13 +120,14 @@ class LeaveEvent(object):
         
     @property
     def xhtml(self):
-        retval = u'%s left' % \
-          userInfo_to_anchor(self.userInfo)
+        cssClass = u'leave-event'
+        retval = u'<li class="%s">%s left' % \
+          (cssClass, userInfo_to_anchor(self.userInfo))
         if not(self.removingUserInfo.anonymous) and\
           self.removingUserInfo.id != self.userInfo.id:
             retval = u'%s &#8212; removed by %s' % \
               (retval, userInfo_to_anchor(self.removingUserInfo))              
-        retval = u'%s (%s)' % \
+        retval = u'%s (%s)</li>' % \
           (retval, munge_date(self.groupInfo.groupObj, self.date))
         return retval
         

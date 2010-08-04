@@ -17,9 +17,9 @@
           <span tal:replace="numMembersJoined"/> joined.</a>
       </p>
       <ul class="disclosureShowHide" style="display:none;">
-        <li tal:repeat="event allEvents">
-          <span tal:replace="structure event/xhtml"/>
-        </li>
+        <tal:block 
+          repeat="event allEvents"
+          replace="structure event/xhtml"/>
       </ul>
     </div>
     <div id="#"
