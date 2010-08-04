@@ -7,7 +7,7 @@
   <browser:page 
     for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="log.html"
-    class=".log.JoinAndLeaveLog"
+    class=".view.JoinAndLeaveLogView"
     template="browser/templates/standard.pt"
     permission="zope2.Public"/>
 

@@ -35,16 +35,32 @@ class JoinLeaveQuery(object):
         s.append_whereclause(aet.c.group_id == group_id)
         
         r = s.execute()
-        retval = {}
         if r.rowcount:
-            retval = [{
-              'year': row['year'],
-              'month': row['month'],
+            rows = [{
+              'year': int(row['year']),
+              'month': int(row['month']),
               'date': row['event_date'],
               'subsystem': row['subsystem'],
               'user_id': row['instance_user_id'],
               'admin_id': row['user_id']
             } for row in r ]
-        assert type(retval) == list
+        years = {}
+        for row in rows:
+            if row['year'] not in years.keys():
+                years[row['year']] = {}
+        for row in rows:
+            if row['month'] not in years[row['year']].keys():
+                years[row['year']][row['month']] = {
+                  JOIN_SUBSYSTEM: [],
+                  LEAVE_SUBSYSTEM: []
+                }
+        for row in rows:
+            years[row['year']][row['month']][row['subsystem']].append({
+              'date': row['date'],
+              'user_id': row['user_id'],
+              'admin_id': row['admin_id']
+            })
+        retval = years
+        assert type(retval) == dict
         return retval
 

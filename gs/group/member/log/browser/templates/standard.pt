@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns ="http://www.w3.org/1999/xhtml"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   metal:use-macro="context/@@groupserver_layout/page">
@@ -12,9 +12,16 @@
   <body>
     <tal:block metal:fill-slot="body">
       <h1 tal:content="view/title">Join and Leave Log for Group Name</h1>
-      <div tal:content="view/events"/>
-      <div tal:content="view/years"/>
-      <div tal:content="view/monthsByYear"/>
+      <div tal:repeat="log view/log/monthLogs">
+        <p>
+          <strong><span tal:replace="log/year"/> <span tal:replace="log/month"/></strong>
+        </p>
+        <p>
+          <span tal:replace="log/numMembersMonthEnd"/> members:
+          <span tal:replace="log/numMembersLeft"/> left,
+          <span tal:replace="log/numMembersJoined"/> joined.
+        </p>
+      </div>
     </tal:block>
   </body>
 </html>

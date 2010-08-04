@@ -12,7 +12,22 @@ class MonthLog(object):
         one particular month 
     """
     
-    def __init__(self, groupInfo, events):
+    def __init__(self, groupInfo, year, month, numMembersMonthEnd, events):
         self.groupInfo = groupInfo
+        self.year = year
+        self.month = month
+        self.numMembersMonthEnd = numMembersMonthEnd
         self.events = events
+        self.joinedMembers = events.get(JOIN_SUBSYSTEM, [])
+        self.numMembersJoined = len(self.joinedMembers)
+        self.leftMembers = events.get(LEAVE_SUBSYSTEM, [])
+        self.numMembersLeft = len(self.leftMembers)
+        self.numMembersMonthStart = \
+          (self.numMembersMonthEnd + self.numMembersJoined - self.numMembersLeft) 
 
+    def __nonzero__(self):
+        return self.events
+
+    def __bool__(self):
+        return self.__nonzero__()
+    

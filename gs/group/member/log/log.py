@@ -1,27 +1,23 @@
 # coding=utf-8
-from Products.Five import BrowserView
-from zope.component import createObject
-from Products.GSGroup.interfaces import IGSGroupInfo
-from Products.GSGroupMember.groupMembersInfo import GSGroupMembersInfo
 from datetime import date
+from zope.interface import implements
+from Products.GSGroupMember.groupMembersInfo import GSGroupMembersInfo
 from gs.group.member.log.queries import JoinLeaveQuery
 from gs.group.member.log.monthlog import MonthLog
+from gs.group.member.log.interfaces import IJoinAndLeaveLog
 
-class JoinAndLeaveLog(BrowserView):
-    ''' A log of how many members have joined and left
+class JoinAndLeaveLog(object):
+    implements(IJoinAndLeaveLog)
+    """ A log of how many members have joined and left
         over each month. 
-    '''
+    """
     
-    def __init__(self, group, request):
-        BrowserView.__init__(self, group, request)
-        self.siteInfo = createObject('groupserver.SiteInfo', group)
-        self.groupInfo = IGSGroupInfo(group)
+    def __init__(self, groupInfo):
+        group = groupInfo.groupObj
+        self.groupInfo = groupInfo
         self.membersInfo = GSGroupMembersInfo(group)
-        
-        self.title = 'Join and Leave Log for %s' % self.groupInfo.name
         self.queries = JoinLeaveQuery(group, group.zsqlalchemy)
-        self.__events = self.__years = self.__monthsByYear = None
-        self.__monthLogs = None
+        self.__events = self.__years = self.__monthLogs = None
     
     @property
     def events(self):
@@ -34,52 +30,35 @@ class JoinAndLeaveLog(BrowserView):
     def years(self):
         if self.__years == None:
             years = []
-            for e in self.events:
-                if e['year'] not in years:
-                    years.append(int(e['year']))
-            if years:
-                earliestYear = min(years)
-                today = date.today()
-                latestYear = today.year
-                self.__years = range(latestYear, (earliestYear-1), -1)
+            if self.events:
+                earliestYear = min(self.events.keys())
+                latestYear = date.today().year
+                years = range(latestYear, (earliestYear - 1), -1)
             self.__years = years
         return self.__years
-
-    @property
-    def monthsByYear(self):
-        if self.__monthsByYear == None:
-            monthsByYear = {}
-            if self.years:
-                today = date.today()
-                latestMonth = today.month
-                earliestMonth = \
-                  min([ e['month'] for e in self.events 
-                        if e['year']==self.years[0] ])
-                for year in self.years:
-                    if (year==self.years[0]) and (year==self.years[-1]):
-                        monthsByYear[year] = \
-                          range(latestMonth, (earliestMonth-1), -1)
-                    elif (year==self.years[0]):
-                        monthsByYear[year] = range(latestMonth, 0, -1)
-                    elif (year==self.years[-1]):
-                        monthsByYear[year] = \
-                          range(12, (earliestMonth-1), -1)
-                    else:
-                        monthsByYear[year] = range(12, 0, -1)
-            self.__monthsByYear = monthsByYear
-        return self.__monthsByYear
-
+                
     @property
     def monthLogs(self):
+        """ The logs for each month, over the appropriate timespan.
+        """
         if self.__monthLogs == None:
             monthLogs = []
-            for year in self.monthsByYear.keys():
-                for month in year:
-                    events = \
-                      [ e for e in self.events 
-                        if (e['year']==year) and (e['month']==month) ]
-                    monthLog = MonthLog(self.groupInfo, events)
+            numMembersMonthEnd = self.membersInfo.fullMemberCount
+            for year in self.years:
+                latestMonth = 12
+                earliestMonth = 1
+                if year == self.years[0]:
+                    latestMonth = date.today().month
+                if year == self.years[-1]:
+                    earliestMonth = min(self.events[year].keys())
+                for month in range(latestMonth, (earliestMonth - 1), -1):
+                    events = {}
+                    if self.events.has_key(year) and self.events[year].has_key(month):
+                        events = self.events[year][month]
+                    monthLog = MonthLog(self.groupInfo, year, month,
+                                          numMembersMonthEnd, events)
                     monthLogs.append(monthLog)
+                    numMembersMonthEnd = monthLog.numMembersMonthStart
             self.__monthLogs = monthLogs
         return self.__monthLogs
 
