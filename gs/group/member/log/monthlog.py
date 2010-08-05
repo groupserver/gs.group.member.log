@@ -52,9 +52,6 @@ class MonthLog(object):
             joinEvents = \
               [ JoinEvent(self.groupInfo, e) for e 
                 in self.events.get(JOIN_SUBSYSTEM, []) ]
-            # If we start displaying join and leave events separately,
-            #  we'll need to switch this sorting on.
-            #joinEvents.sort(key=lambda e: e.date, reverse=True)
             self.__joinEvents = joinEvents
         return self.__joinEvents
 
@@ -64,9 +61,6 @@ class MonthLog(object):
             leaveEvents = \
               [ LeaveEvent(self.groupInfo, e) for e 
                 in self.events.get(LEAVE_SUBSYSTEM, []) ]
-            # If we start displaying join and leave events separately,
-            #  we'll need to switch this sorting on.
-            #leaveEvents.sort(key=lambda e: e.date, reverse=True)
             self.__leaveEvents = leaveEvents
         return self.__leaveEvents
 

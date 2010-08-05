@@ -17,7 +17,7 @@
           <span tal:replace="numMembersLeft"/> left,
           <span tal:replace="numMembersJoined"/> joined</a>
       </p>
-      <ul class="disclosureShowHide" style="display:none;">
+      <ul class="disclosureShowHide join-leave-events" style="display:none;">
         <tal:block 
           repeat="event allEvents"
           replace="structure event/xhtml"/>
@@ -29,7 +29,7 @@
       <h4 tal:content="label">August 2010</h4>
       <p>
         <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
-            or '%d members' % numMembersMonthEnd"/>
+          or '%d members' % numMembersMonthEnd"/>
         <span tal:replace="numMembersLeft"/> left,
         <span tal:replace="numMembersJoined"/> joined
       </p>

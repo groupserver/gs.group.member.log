@@ -8,6 +8,23 @@
         Join and Leave Log for Group Name: Site Name
       </span>
     </title>
+    <tal:block metal:fill-slot="style">
+      <style type="text/css">
+        .join-event, .leave-event {
+          list-style: none;
+        }
+        li.join-event::before {
+          content: "+ ";
+          font-weight: bold;
+          font-size: 123%;
+        }
+        li.leave-event::before {
+          content: "\2212  "; /* Hex Code for the minus sign &#8722; */
+          font-weight: bold;
+          font-size: 123%;
+        }
+      </style>
+    </tal:block>
   </head>
   <body>
     <tal:block metal:fill-slot="body">
