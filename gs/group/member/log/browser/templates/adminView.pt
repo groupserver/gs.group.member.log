@@ -17,11 +17,33 @@
           <span tal:replace="numMembersLeft"/> left,
           <span tal:replace="numMembersJoined"/> joined</a>
       </p>
-      <ul class="disclosureShowHide join-leave-events" style="display:none;">
-        <tal:block 
-          repeat="event allEvents"
-          replace="structure event/xhtml"/>
-      </ul>
+      <div class="disclosureShowHide" style="display: None;">
+        <div id="tabmenu" class="tabmenu"
+          tal:attributes="id string:${year}-${month}-tabmenu">
+          <ul>
+            <li>
+              <a href="#" class="all current" id="all"
+                tal:attributes="id string:${year}-${month}-all">All</a>
+            </li>
+            <li>
+              <a href="#" class="join" id="join"
+                tal:attributes="id string:${year}-${month}-join">Join</a>
+            </li>
+            <li>
+              <a href="#" class="leave" id="leave"
+                tal:attributes="id string:${year}-${month}-leave">Leave</a>
+            </li>
+          </ul>
+        </div><!--tabmenu-->
+        <div class="tabbody">
+          <ul id="events" class="events"
+            tal:attributes="id string:${year}-${month}-events">
+            <tal:block 
+              repeat="event allEvents"
+              replace="structure event/xhtml"/>
+          </ul><!--events-->
+        </div>
+      </div>
     </div>
     <div id="#"
       tal:condition="not:monthLog"
