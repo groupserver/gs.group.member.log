@@ -1,8 +1,9 @@
 <div tal:repeat="monthLog options/log/monthLogs">
   <h4 tal:content="monthLog/label">August 2010</h4>
   <p>
-    <span tal:replace="monthLog/numMembersMonthEnd"/> members:
-    <span tal:replace="monthLog/numMembersLeft"/> left,
-    <span tal:replace="monthLog/numMembersJoined"/> joined.
+    <span tal:replace="python:monthLog.numMembersMonthEnd==1 and '1 member' 
+      or '%d members' % monthLog.numMembersMonthEnd"/>:
+    <span tal:replace="monthLog/numMembersJoined"/> joined,
+    <span tal:replace="monthLog/numMembersLeft"/> left
   </p>
 </div>

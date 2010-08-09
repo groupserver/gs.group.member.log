@@ -10,44 +10,9 @@
     </title>
     <tal:block metal:fill-slot="style">
       <style type="text/css">
-        /* Borrowed from globalstyle-20100525.css */
-        /* Tabs */
-        .tabmenu ul {
-          margin: 0px;
-          padding: 0px;
-          line-height: 2.08em;
+        #tabbody {
+          clear: left;
         }
-        .tabmenu li {
-          list-style-type: none;
-          display: block;
-          float: left;
-          line-height: 2.08em;
-        }
-        .tabmenu a {
-          padding: 0.3em 1.39em;
-        }
-        .tabmenu a {
-          font-weight: bold;
-          color: #f0ecd8;
-        }
-        .tabmenu a {
-          border-top: thin solid #41638b;
-          border-right: thin solid #41638b;
-          border-bottom: none;
-          border-left: thin solid #41638b;
-        }
-        .tabmenu a {
-          background: #839ab8;
-        }
-        .tabmenu a.current, .tabmenu a:hover {
-          color: #41638b;
-          background: none;
-        }
-        .events {
-          border-top:thin solid #41638B;
-          clear:left;
-        }
-
         .join-event, .leave-event {
           list-style: none;
         }
@@ -61,10 +26,10 @@
           font-weight: bold;
           font-size: 123%;
         }
-        ul.join > li.leave-event {
+        #tabbody.join .leave-event {
           display: None;
         }
-        ul.leave > li.join-event {
+        #tabbody.leave .join-event {
           display: None;
         }
       </style>
@@ -80,12 +45,10 @@
         jQuery.noConflict();
         var switchTab = function() {
           button = jQuery(this);
-          buttonId = button.attr("id");
-          yearMonth = buttonId.split('-')[0] + "-" + buttonId.split('-')[1];
-          jQuery('#' + yearMonth + '-tabmenu .current').removeClass('current');
+          jQuery('#tabmenu .current').removeClass('current');
           button.addClass('current');
-          displayArea = jQuery("#" + yearMonth + "-events");
-          show = buttonId.split('-')[2]
+          displayArea = jQuery("#tabbody");
+          show = button.attr("id");
           displayArea.addClass(show);
           if (show != "join") {
             displayArea.removeClass("join");
@@ -98,7 +61,7 @@
             jQuery(this).removeAttr('href').css("cursor","pointer").click(switchTab);
         }
         jQuery(document).ready( function () {
-            jQuery('.tabmenu a').each(prepare);
+            jQuery('#tabmenu a').each(prepare);
         })
       </script>
     </tal:block>
