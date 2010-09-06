@@ -7,3 +7,6 @@
     <span tal:replace="monthLog/numMembersLeft"/> left
   </p>
 </div>
+<div tal:condition="not:options/log/monthLogs">
+  <p>No join or leave events to display.</p>
+</div>

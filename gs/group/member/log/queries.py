@@ -35,6 +35,7 @@ class JoinLeaveQuery(object):
         s.append_whereclause(aet.c.group_id == group_id)
         
         r = s.execute()
+        rows = []
         if r.rowcount:
             rows = [{
               'year': int(row['year']),

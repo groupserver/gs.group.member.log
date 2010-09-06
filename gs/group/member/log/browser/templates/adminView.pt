@@ -57,3 +57,6 @@
     </tal:block>
   </tal:block>
 </div><!--tabbody-->
+<div tal:condition="not:options/log/monthLogs">
+  <p>No join or leave events to display.</p>
+</div>
