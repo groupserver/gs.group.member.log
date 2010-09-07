@@ -5,6 +5,7 @@ from zope.interface import implements, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.contentprovider.interfaces import UpdateNotCalled, IContentProvider
 from gs.group.member.log.interfaces import ILogContentProvider
+from Products.XWFCore.XWFUtils import get_the_actual_instance_from_zope
 
 class LogContentProvider(object):
     implements(ILogContentProvider)
@@ -36,9 +37,11 @@ class LogContentProvider(object):
 
     @property
     def isAdmin(self):
-        viewingUserInfo = createObject('groupserver.LoggedInUser', self.context)
-        isGroupAdmin = (viewingUserInfo.id in [ a.id for a in self.groupInfo.group_admins ])
-        isSiteAdmin = (viewingUserInfo.id in [ a.id for a in self.groupInfo.site_admins ])
+        ctx = get_the_actual_instance_from_zope(self.context)
+        groupInfo = createObject('groupserver.GroupInfo', ctx)
+        viewingUserInfo = createObject('groupserver.LoggedInUser', ctx)
+        isGroupAdmin = (viewingUserInfo.id in [ a.id for a in groupInfo.group_admins ])
+        isSiteAdmin = (viewingUserInfo.id in [ a.id for a in groupInfo.site_admins ])
         retval = (isGroupAdmin or isSiteAdmin)
         assert type(retval) == bool
         return retval
