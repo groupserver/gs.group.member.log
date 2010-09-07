@@ -37,11 +37,10 @@ class LogContentProvider(object):
 
     @property
     def isAdmin(self):
-        ctx = get_the_actual_instance_from_zope(self.context)
-        groupInfo = createObject('groupserver.GroupInfo', ctx)
-        viewingUserInfo = createObject('groupserver.LoggedInUser', ctx)
-        isGroupAdmin = (viewingUserInfo.id in [ a.id for a in groupInfo.group_admins ])
-        isSiteAdmin = (viewingUserInfo.id in [ a.id for a in groupInfo.site_admins ])
+        viewingUserInfo = createObject('groupserver.LoggedInUser', self.context)
+        isGroupAdmin = (viewingUserInfo.id in [ a.id for a in self.groupInfo.group_admins ])
+        siteInfo = createObject('groupserver.SiteInfo', self.context)
+        isSiteAdmin = (viewingUserInfo.id in [ a.id for a in siteInfo.site_admins ])
         retval = (isGroupAdmin or isSiteAdmin)
         assert type(retval) == bool
         return retval
