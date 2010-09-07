@@ -4,6 +4,8 @@ from zope.component import createObject, provideAdapter, adapts
 from zope.interface import implements, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.contentprovider.interfaces import UpdateNotCalled, IContentProvider
+from Products.GSGroupMember.groupmembership import user_division_admin_of_group
+from Products.GSGroupMember.groupmembership import user_group_admin_of_group
 from gs.group.member.log.interfaces import ILogContentProvider
 
 class LogContentProvider(object):
@@ -37,14 +39,8 @@ class LogContentProvider(object):
     @property
     def isAdmin(self):
         viewingUserInfo = createObject('groupserver.LoggedInUser', self.context)
-        isGroupAdmin = (viewingUserInfo.id in [ a.id for a in self.groupInfo.group_admins ])
-        siteInfo = createObject('groupserver.SiteInfo', self.context)
-        print 'gs.group.member.log: %s (%s) on %s (%s)' % \
-          (viewingUserInfo.name, viewingUserInfo.id, siteInfo.name, siteInfo.id) 
-        isSiteAdmin = (viewingUserInfo.id in [ a.id for a in siteInfo.site_admins ])
-        print 'isSiteAdmin: %s' % isSiteAdmin
-        print 'Site Admins on %s (%s): %s' %\
-          (siteInfo.name, siteInfo.id, ','.join([ a.id for a in siteInfo.site_admins ]))
+        isGroupAdmin = user_group_admin_of_group(viewingUserInfo, self.groupInfo)
+        isSiteAdmin = user_division_admin_of_group(viewingUserInfo, self.groupInfo)
         retval = (isGroupAdmin or isSiteAdmin)
         assert type(retval) == bool
         return retval
