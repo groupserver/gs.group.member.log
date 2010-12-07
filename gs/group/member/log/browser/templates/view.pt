@@ -8,38 +8,12 @@
         Join and Leave Log for Group Name: Site Name
       </span>
     </title>
-    <tal:block metal:fill-slot="style">
-      <style type="text/css">
-        #tabbody {
-          clear: left;
-        }
-        .join-event, .leave-event {
-          list-style: none;
-        }
-        li.join-event::before {
-          content: "+ ";
-          font-weight: bold;
-          font-size: 123%;
-        }
-        li.leave-event::before {
-          content: "\2212  "; /* Hex Code for the minus sign &#8722; */
-          font-weight: bold;
-          font-size: 123%;
-        }
-        #tabbody.join .leave-event {
-          display: None;
-        }
-        #tabbody.leave .join-event {
-          display: None;
-        }
-      </style>
-    </tal:block>
   </head>
   <body>
-    <tal:block metal:fill-slot="body">
+    <div metal:fill-slot="body" id="gs-group-member-log">
       <h1 tal:content="view/title">Join and Leave Log for Group Name</h1>
       <div tal:replace="structure provider:gs.group.member.log.LogContentProvider"/>
-    </tal:block>
+    </div><!--gs-group-member-log-->
     <tal:block metal:fill-slot="javascript">
       <script type="text/javascript">
         jQuery.noConflict();
