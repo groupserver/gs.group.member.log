@@ -25,6 +25,11 @@ setup(name='gs.group.member.log',
     zip_safe=False,
     install_requires=[
         'setuptools',
+        'gs.content.js.jquery',
+        'Products.GSGroup',
+        'Products.GSGroupMember',
+        'gs.group.member.join',
+        'gs.group.member.leave',
         # -*- Extra requirements: -*-
     ],
     entry_points="""

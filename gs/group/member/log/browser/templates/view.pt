@@ -15,28 +15,27 @@
       <div tal:replace="structure provider:gs.group.member.log.LogContentProvider"/>
     </div><!--gs-group-member-log-->
     <tal:block metal:fill-slot="javascript">
+      <script src="/++resource++jquery-ui-1.8.9.custom.min.js" 
+        type="text/javascript">&#160;</script>
       <script type="text/javascript">
         jQuery.noConflict();
-        var switchTab = function() {
-          button = jQuery(this);
-          jQuery('#tabmenu .current').removeClass('current');
-          button.addClass('current');
-          displayArea = jQuery("#tabbody");
-          show = button.attr("id");
-          displayArea.addClass(show);
-          if (show != "join") {
+        var selectTab = function(event, ui) {
+          var displayArea = jQuery("#tabbody");
+          if (ui.index == 0) {
+            displayArea.addClass('all');
+            displayArea.removeClass("join");
+            displayArea.removeClass("leave");
+          } else if (ui.index == 1) {
+            displayArea.addClass('join');
+            displayArea.removeClass("leave");
+          } else if (ui.index == 2) {
+            displayArea.addClass('leave');
             displayArea.removeClass("join");
           }
-          if (show != "leave") {
-            displayArea.removeClass("leave");
-          }
-        }
-        var prepare = function (button) {
-            jQuery(this).removeAttr('href').css("cursor","pointer").click(switchTab);
-        }
-        jQuery(document).ready( function () {
-            jQuery('#tabmenu a').each(prepare);
-        })
+        };
+        jQuery(window).ready(function () {
+          jQuery('#log-tabs').tabs({select: selectTab});
+        });
       </script>
     </tal:block>
   </body>
