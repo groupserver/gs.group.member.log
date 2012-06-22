@@ -5,10 +5,12 @@ from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
 from gs.group.member.leave.audit import LEAVE
 from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
 
+from gs.database import getSession, getTable
+
 class JoinLeaveQuery(object):
     
-    def __init__(self, context, da):
-        self.auditEventTable = da.createTable('audit_event')
+    def __init__(self, context):
+        self.auditEventTable = getTable('audit_event')
     
     def group_join_leave_events(self, group_id):
         aet = self.auditEventTable
@@ -33,8 +35,9 @@ class JoinLeaveQuery(object):
         leaveClauses = ((aet.c.subsystem == LEAVE_SUBSYSTEM) & (aet.c.event_code == LEAVE))
         s.append_whereclause(joinClauses | leaveClauses)
         s.append_whereclause(aet.c.group_id == group_id)
-        
-        r = s.execute()
+
+        session = getSession()
+        r = session.execute(s)
         rows = []
         if r.rowcount:
             rows = [{

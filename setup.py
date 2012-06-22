@@ -25,6 +25,7 @@ setup(name='gs.group.member.log',
     zip_safe=False,
     install_requires=[
         'setuptools',
+        'gs.database',
         'gs.content.js.jquery',
         'Products.GSGroup',
         'Products.GSGroupMember',

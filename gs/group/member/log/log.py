@@ -16,7 +16,7 @@ class JoinAndLeaveLog(object):
         group = groupInfo.groupObj
         self.groupInfo = groupInfo
         self.membersInfo = GSGroupMembersInfo(group)
-        self.queries = JoinLeaveQuery(group, group.zsqlalchemy)
+        self.queries = JoinLeaveQuery(group)
         self.__events = self.__years = self.__monthLogs = None
     
     @property
