@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configure xmlns="http://namespaces.zope.org/zope"
-  xmlns:browser="http://namespaces.zope.org/browser"
-  xmlns:five="http://namespaces.zope.org/five"
-  i18n_domain="groupserver">
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="groupserver">
 
-  <browser:page 
+  <include package="zope.viewlet" file="meta.zcml" />
+
+  <!--browser:page 
     for="Products.XWFChat.interfaces.IGSGroupFolder"
     name="log.html"
     class=".view.JoinAndLeaveLogView"
@@ -12,6 +13,24 @@
     permission="zope2.View"/>
   <interface 
     interface=".interfaces.ILogContentProvider"
-    type="zope.contentprovider.interfaces.ITALNamespaceData"/>
+    type="zope.contentprovider.interfaces.ITALNamespaceData"/-->
+
+  <browser:viewlet
+    name="gs-group-member-log"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    manager="gs.group.member.list.interfaces.IMemberList"
+    class="gs.group.base.GroupViewlet"
+    template="browser/templates/log.pt"
+    title="Log"
+    weight="40"
+    permission="zope2.View" />
+
+  <browser:viewletManager
+    name="groupserver.JoinAndLeaveLog"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    provides=".interfaces.IJoinAndLeaveLog"
+    class="gs.viewlet.manager.WeightOrderedViewletManager"
+    template="browser/templates/tabs.pt"
+    permission="zope2.View" />
 
 </configure>
