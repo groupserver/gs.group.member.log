@@ -36,6 +36,7 @@ class JoinAndLeaveLog(object):
         retval = GSGroupMembersInfo(self.groupInfo.groupObj)
         return retval
 
+    @Lazy
     def queries(self):
         retval = JoinLeaveQuery(self.groupInfo.groupObj)
         return retval
