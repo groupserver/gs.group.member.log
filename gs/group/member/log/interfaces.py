@@ -1,7 +1,21 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2013 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
 from zope.interface import Attribute
 from zope.interface.interface import Interface
 from zope.schema import Date, Dict, Int, List, Text
+
 
 class IJoinAndLeaveLog(Interface):
     """ A class which collates all the joining and leaving
@@ -11,19 +25,20 @@ class IJoinAndLeaveLog(Interface):
     membersInfo = Attribute("""A GSGroupMembersInfo instance""")
     queries = Attribute("""A JoinLeaveQuery instance""")
     events = Dict(title=u'Join and Leave Events',
-      description=u'A dictionary, of which the keys are years.'\
-        u'Each corresponding value is another dictionary, of which '\
-        u'the keys are months. Each month value is another dictionary, '\
-        u'which has two keys: one for joining and one for leaving. Each '\
+      description=u'A dictionary, of which the keys are years.'
+        u'Each corresponding value is another dictionary, of which '
+        u'the keys are months. Each month value is another dictionary, '
+        u'which has two keys: one for joining and one for leaving. Each '
         u'of these values are a list of joining or leaving events.',
       required=False)
     years = List(title=u'Years',
-      description=u'A range of integers, ranging from the current '\
+      description=u'A range of integers, ranging from the current '
         u'year to the first one for which we have joining or leaving data.',
       required=False)
     monthLogs = List(title=u'Monthly Logs',
       description=u'A list of MonthLog instances',
       required=False)
+
 
 class IMonthLog(Interface):
     """ A class which knows all the joining and leaving for
@@ -40,7 +55,7 @@ class IMonthLog(Interface):
       description=u'The number of members at the end of the month',
       required=False)
     events = Dict(title=u'Events',
-      description=u'A dictionary with two keys: one with a list of '\
+      description=u'A dictionary with two keys: one with a list of '
         'joining events, the other with a list of leaving events',
       required=False)
     joinEvents = List(title=u'Join Events',
@@ -58,7 +73,8 @@ class IMonthLog(Interface):
     numMembersMonthStart = Int(title=u'Start Number of Members',
       description=u'The number of members at the start of the month',
       required=False)
-    
+
+
 class IJoinEvent(Interface):
     """ Information about a joining event.
     """
@@ -67,11 +83,13 @@ class IJoinEvent(Interface):
     eventDate = Date(title=u'Event Date',
       description=u'The joining date',
       required=True)
-    addingUserInfo = Attribute("""Optional: The user who added the member to the group""")
+    addingUserInfo = Attribute("Optional: The user who added the member to "
+                                "the group")
     xhtml = Text(title=u'XHTML',
       description=u'XHTML description of event',
       required=True)
-    
+
+
 class ILeaveEvent(Interface):
     """ Information about a leaving event.
     """
@@ -80,11 +98,13 @@ class ILeaveEvent(Interface):
     eventDate = Date(title=u'Event Date',
       description=u'The joining date',
       required=True)
-    removingUserInfo = Attribute("""Optional: The user who removed the member from the group""")
+    removingUserInfo = Attribute("Optional: The user who removed the member "
+                                    "from the group")
     xhtml = Text(title=u'XHTML',
       description=u'XHTML description of event',
       required=True)
-    
+
+
 class ILogContentProvider(Interface):
     """The content provider for the group membership log """
     log = Attribute("""A JoinAndLeaveLog instance """)
@@ -92,5 +112,3 @@ class ILogContentProvider(Interface):
       description=u'The name of the ZPT file that is used to render the log.',
       required=False,
       default=u"browser/templates/standardView.pt")
-    
-    

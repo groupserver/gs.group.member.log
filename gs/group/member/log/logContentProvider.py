@@ -1,34 +1,46 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2013 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
 from zope.app.pagetemplate import ViewPageTemplateFile
-from zope.component import createObject, provideAdapter, adapts
+from zope.cachedescriptors.property import Lazy
+from zope.component import provideAdapter, adapts
 from zope.interface import implements, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.contentprovider.interfaces import UpdateNotCalled, IContentProvider
 from Products.GSGroupMember.groupmembership import user_division_admin_of_group
 from Products.GSGroupMember.groupmembership import user_group_admin_of_group
 from gs.group.member.log.interfaces import ILogContentProvider
+from gs.group.base import GroupContentProvider
 
-class LogContentProvider(object):
+
+class LogContentProvider(GroupContentProvider):
     implements(ILogContentProvider)
     adapts(Interface, IDefaultBrowserLayer, Interface)
-    
-    def __init__(self, context, request, view):
-        self.__parent__ = self.view = view
+
+    def __init__(self, group, request, view):
+        super(LogContentProvider, self).__init__(group, request, view)
         self.__updated = False
-    
-        self.context = context
-        self.request = request
-        self.log = view.log
-        self.groupInfo = view.groupInfo 
-        
+
     def update(self):
         self.__updated = True
-            
+
     def render(self):
         if not self.__updated:
             raise UpdateNotCalled
         if self.isAdmin:
-            pageTemplate = ViewPageTemplateFile('browser/templates/adminView.pt')
+            adminFile = 'browser/templates/adminView.pt'
+            pageTemplate = ViewPageTemplateFile(adminFile)
         else:
             pageTemplate = ViewPageTemplateFile(self.pageTemplateFileName)
         retval = pageTemplate(self,
@@ -36,11 +48,12 @@ class LogContentProvider(object):
                               log=self.log)
         return retval
 
-    @property
+    @Lazy
     def isAdmin(self):
-        viewingUserInfo = createObject('groupserver.LoggedInUser', self.context)
-        isGroupAdmin = user_group_admin_of_group(viewingUserInfo, self.groupInfo)
-        isSiteAdmin = user_division_admin_of_group(viewingUserInfo, self.groupInfo)
+        isGroupAdmin = user_group_admin_of_group(self.loggedInUser,
+                                                    self.groupInfo)
+        isSiteAdmin = user_division_admin_of_group(self.loggedInUser,
+                                                    self.groupInfo)
         retval = (isGroupAdmin or isSiteAdmin)
         assert type(retval) == bool
         return retval
@@ -48,4 +61,3 @@ class LogContentProvider(object):
 provideAdapter(LogContentProvider,
     provides=IContentProvider,
     name='gs.group.member.log.LogContentProvider')
-

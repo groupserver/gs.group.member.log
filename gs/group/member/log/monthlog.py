@@ -1,21 +1,36 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2013 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+from __future__ import absolute_import
 from datetime import date
-from zope.interface import implements
+from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
-from Products.XWFCore.XWFUtils import munge_date
+from zope.interface import implements
 from Products.CustomUserFolder.userinfo import userInfo_to_anchor
+from Products.XWFCore.XWFUtils import munge_date
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
 from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
-from gs.group.member.log.interfaces import IMonthLog
-from gs.group.member.log.interfaces import IJoinEvent, ILeaveEvent
+from .interfaces import IMonthLog, IJoinEvent, ILeaveEvent
+
 
 class MonthLog(object):
     implements(IMonthLog)
     """ A class that implements the IMonthLog interface, and
         therefore knows all the joining and leaving for
-        one particular month 
+        one particular month
     """
-    
+
     def __init__(self, groupInfo, year, month, numMembersMonthEnd, events):
         self.groupInfo = groupInfo
         self.year = year
@@ -34,48 +49,40 @@ class MonthLog(object):
 
     @property
     def numMembersMonthStart(self):
-        return (self.numMembersMonthEnd - \
-                self.numMembersJoined + \
+        return (self.numMembersMonthEnd -
+                self.numMembersJoined +
                 self.numMembersLeft)
 
     @property
     def numMembersJoined(self):
         return len(self.joinEvents)
-    
+
     @property
     def numMembersLeft(self):
         return len(self.leaveEvents)
-    
-    @property
+
+    @Lazy
     def joinEvents(self):
-        if self.__joinEvents == None:
-            joinEvents = \
-              [ JoinEvent(self.groupInfo, e) for e 
-                in self.events.get(JOIN_SUBSYSTEM, []) ]
-            self.__joinEvents = joinEvents
-        return self.__joinEvents
+        retval = [JoinEvent(self.groupInfo, e)
+                    for e in self.events.get(JOIN_SUBSYSTEM, [])]
+        return retval
 
-    @property
+    @Lazy
     def leaveEvents(self):
-        if self.__leaveEvents == None:
-            leaveEvents = \
-              [ LeaveEvent(self.groupInfo, e) for e 
-                in self.events.get(LEAVE_SUBSYSTEM, []) ]
-            self.__leaveEvents = leaveEvents
-        return self.__leaveEvents
+        retval = [LeaveEvent(self.groupInfo, e)
+                    for e in self.events.get(LEAVE_SUBSYSTEM, [])]
+        return retval
 
-    @property
+    @Lazy
     def allEvents(self):
-        if self.__allEvents == None:
-            allEvents = self.joinEvents + self.leaveEvents
-            allEvents.sort(key=lambda e: e.date, reverse=True)
-            self.__allEvents = allEvents
-        return self.__allEvents
+        retval = self.joinEvents + self.leaveEvents
+        retval.sort(key=lambda e: e.date, reverse=True)
+        return retval
 
 
 class JoinEvent(object):
     implements(IJoinEvent)
-    
+
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
         self.userInfo = \
@@ -85,7 +92,7 @@ class JoinEvent(object):
         self.addingUserInfo = \
           createObject('groupserver.UserFromId',
             self.groupInfo.groupObj, eDict['admin_id'])
-        
+
     @property
     def xhtml(self):
         cssClass = u'join-event'
@@ -94,14 +101,15 @@ class JoinEvent(object):
         if not(self.addingUserInfo.anonymous) and\
           (self.addingUserInfo.id != self.userInfo.id):
             retval = u'%s &#8212; invited by %s' % \
-              (retval, userInfo_to_anchor(self.addingUserInfo))              
+              (retval, userInfo_to_anchor(self.addingUserInfo))
         retval = u'%s (%s)' % \
           (retval, munge_date(self.groupInfo.groupObj, self.date))
         return retval
 
+
 class LeaveEvent(object):
     implements(ILeaveEvent)
-    
+
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
         self.userInfo = \
@@ -111,7 +119,7 @@ class LeaveEvent(object):
         self.removingUserInfo = \
           createObject('groupserver.UserFromId',
             self.groupInfo.groupObj, eDict['admin_id'])
-        
+
     @property
     def xhtml(self):
         cssClass = u'leave-event'
@@ -120,8 +128,7 @@ class LeaveEvent(object):
         if not(self.removingUserInfo.anonymous) and\
           self.removingUserInfo.id != self.userInfo.id:
             retval = u'%s &#8212; removed by %s' % \
-              (retval, userInfo_to_anchor(self.removingUserInfo))              
+              (retval, userInfo_to_anchor(self.removingUserInfo))
         retval = u'%s (%s)</li>' % \
           (retval, munge_date(self.groupInfo.groupObj, self.date))
         return retval
-        

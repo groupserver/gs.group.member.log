@@ -1,24 +1,37 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2013 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
 import sqlalchemy as sa
+from gs.database import getSession, getTable
 from gs.group.member.join.audit import JOIN_GROUP as JOIN
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
 from gs.group.member.leave.audit import LEAVE
 from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
 
-from gs.database import getSession, getTable
 
 class JoinLeaveQuery(object):
-    
+
     def __init__(self, context):
         self.auditEventTable = getTable('audit_event')
-    
+
     def group_join_leave_events(self, group_id):
         aet = self.auditEventTable
-#        SELECT EXTRACT(year FROM event_date) AS year, 
-#          EXTRACT(month FROM event_date) AS month, 
-#          subsystem, event_date, instance_user_id, user_id 
-#        FROM audit_event 
-#        WHERE 
+#        SELECT EXTRACT(year FROM event_date) AS year,
+#          EXTRACT(month FROM event_date) AS month,
+#          subsystem, event_date, instance_user_id, user_id
+#        FROM audit_event
+#        WHERE
 #          ((subsystem = 'gs.group.member.join' AND event_code = '1')
 #           OR
 #           (subsystem = 'gs.group.member.leave' AND event_code = '1'))
@@ -31,8 +44,10 @@ class JoinLeaveQuery(object):
           aet.c.instance_user_id,
           aet.c.user_id
         ])
-        joinClauses = ((aet.c.subsystem == JOIN_SUBSYSTEM) & (aet.c.event_code == JOIN))
-        leaveClauses = ((aet.c.subsystem == LEAVE_SUBSYSTEM) & (aet.c.event_code == LEAVE))
+        joinClauses = ((aet.c.subsystem == JOIN_SUBSYSTEM)
+                        & (aet.c.event_code == JOIN))
+        leaveClauses = ((aet.c.subsystem == LEAVE_SUBSYSTEM)
+                        & (aet.c.event_code == LEAVE))
         s.append_whereclause(joinClauses | leaveClauses)
         s.append_whereclause(aet.c.group_id == group_id)
 
@@ -47,7 +62,7 @@ class JoinLeaveQuery(object):
               'subsystem': row['subsystem'],
               'user_id': row['instance_user_id'],
               'admin_id': row['user_id']
-            } for row in r ]
+            } for row in r]
         years = {}
         for row in rows:
             if row['year'] not in years.keys():
@@ -67,4 +82,3 @@ class JoinLeaveQuery(object):
         retval = years
         assert type(retval) == dict
         return retval
-
