@@ -15,6 +15,7 @@
     interface=".interfaces.ILogContentProvider"
     type="zope.contentprovider.interfaces.ITALNamespaceData"/-->
 
+  <!-- The viewlet for the Members page -->
   <browser:viewlet
     name="gs-group-member-log"
     for="gs.group.base.interfaces.IGSGroupMarker"
@@ -25,6 +26,7 @@
     weight="40"
     permission="zope2.View" />
 
+  <!-- The viewlet manger for the log -->
   <browser:viewletManager
     name="groupserver.JoinAndLeaveLog"
     for="gs.group.base.interfaces.IGSGroupMarker"
@@ -33,4 +35,22 @@
     template="browser/templates/tabs.pt"
     permission="zope2.View" />
 
+  <browser:viewlet
+    name="group-member-log-summary"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    manager=".interfaces.IJoinAndLeaveLog"
+    class=".viewlet.LogViewlet"
+    template="browser/templates/summary.pt"
+    weight="10"
+    title="Summary"
+    permission="zope2.View" />
+  <browser:viewlet
+    name="group-member-log-all"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    manager=".interfaces.IJoinAndLeaveLog"
+    class=".viewlet.LogViewlet"
+    template="browser/templates/all.pt"
+    weight="100"
+    title="All"
+    permission="zope2.ManageUsers" />    
 </configure>

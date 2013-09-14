@@ -14,18 +14,27 @@
 ##############################################################################
 from __future__ import absolute_import
 from zope.cachedescriptors.property import Lazy
-from gs.group.base import GroupPage
+from gs.group.base import GroupViewlet
 from .log import JoinAndLeaveLog
 
 
-class JoinAndLeaveLogView(GroupPage):
-    """ The browser view of a group's join and leave log.
-    """
+class LogViewlet(GroupViewlet):
 
-    def __init__(self, group, request):
-        super(JoinAndLeaveLogView, self).__init__(group, request)
+    def __init__(self, group, request, view, manager):
+        super(LogViewlet, self).__init__(group, request, view, manager)
 
     @Lazy
     def log(self):
         retval = JoinAndLeaveLog(self.groupInfo)
         return retval
+
+
+class SummaryLogViewlet(LogViewlet):
+
+    def __init__(self, group, request, view, manager):
+        super(SummaryLogViewlet, self).__init__(group, request, view, manager)
+
+    @Lazy
+    def show(self):
+        retval =
+

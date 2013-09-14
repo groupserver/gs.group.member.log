@@ -1,0 +1,14 @@
+<div id="gs-group-member-log-summary">
+  <div tal:repeat="monthLog view/log/monthLogs">
+    <h4 tal:content="monthLog/label">August 2010</h4>
+    <p>
+      <span tal:replace="python:monthLog.numMembersMonthEnd==1 and '1 member' 
+                         or '%d members' % monthLog.numMembersMonthEnd"/>:
+      <span tal:replace="monthLog/numMembersJoined"/> joined,
+      <span tal:replace="monthLog/numMembersLeft"/> left
+    </p>
+  </div>
+  <div tal:condition="not:view/log/monthLogs">
+    <p>No join or leave events to display.</p>
+  </div>
+</div>

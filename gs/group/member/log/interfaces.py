@@ -15,6 +15,7 @@
 from zope.interface import Attribute
 from zope.interface.interface import Interface
 from zope.schema import Date, Dict, Int, List, Text
+from zope.viewlet.interfaces import IViewletManager
 
 
 class IJoinAndLeaveLog(Interface):
@@ -112,3 +113,7 @@ class ILogContentProvider(Interface):
       description=u'The name of the ZPT file that is used to render the log.',
       required=False,
       default=u"browser/templates/standardView.pt")
+
+
+class IJoinAndLeaveLog(IViewletManager):
+    pass
