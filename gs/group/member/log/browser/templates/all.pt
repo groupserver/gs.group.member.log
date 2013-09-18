@@ -1,4 +1,8 @@
 <div id="gs-group-member-log-all">
+  <p class="muted">
+    This detailed information is only visible to administrators.
+    Normal members just see how many people joined and left each month.
+  </p>
   <div id="gs-group-member-log-all-list">
     <tal:block repeat="monthLog view/log/monthLogs">
       <tal:block define="year monthLog/year;

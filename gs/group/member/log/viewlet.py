@@ -27,14 +27,3 @@ class LogViewlet(GroupViewlet):
     def log(self):
         retval = JoinAndLeaveLog(self.groupInfo)
         return retval
-
-
-class SummaryLogViewlet(LogViewlet):
-
-    def __init__(self, group, request, view, manager):
-        super(SummaryLogViewlet, self).__init__(group, request, view, manager)
-
-    @Lazy
-    def show(self):
-        retval =
-
