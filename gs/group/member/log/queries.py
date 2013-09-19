@@ -14,10 +14,9 @@
 ##############################################################################
 import sqlalchemy as sa
 from gs.database import getSession, getTable
-from gs.group.member.join.audit import JOIN_GROUP as JOIN
-from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
-from gs.group.member.leave.audit import LEAVE
-from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
+from gs.group.member.join.audit import JOIN_GROUP as JOIN, \
+    SUBSYSTEM as JOIN_SUBSYSTEM
+from gs.group.member.leave.audit import LEAVE, SUBSYSTEM as LEAVE_SUBSYSTEM
 
 
 class JoinLeaveQuery(object):
