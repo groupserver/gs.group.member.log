@@ -30,7 +30,7 @@
     for="gs.group.base.interfaces.IGSGroupMarker"
     manager="gs.group.member.list.interfaces.IMemberList"
     class=".viewlet.LogViewlet"
-    template="browser/templates/all.pt"
+    template="browser/templates/detail.pt"
     weight="65"
     title="Detailed log"
     permission="zope2.ManageUsers" />
