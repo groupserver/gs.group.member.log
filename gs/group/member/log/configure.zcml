@@ -5,16 +5,6 @@
 
   <include package="zope.viewlet" file="meta.zcml" />
 
-  <!--browser:page 
-    for="Products.XWFChat.interfaces.IGSGroupFolder"
-    name="log.html"
-    class=".view.JoinAndLeaveLogView"
-    template="browser/templates/view.pt"
-    permission="zope2.View"/>
-  <interface 
-    interface=".interfaces.ILogContentProvider"
-    type="zope.contentprovider.interfaces.ITALNamespaceData"/-->
-
   <browser:viewlet
     name="group-member-log-summary"
     for="gs.group.base.interfaces.IGSGroupMarker"
@@ -26,7 +16,7 @@
     permission="zope2.View" />
   
   <browser:viewlet
-    name="group-member-log-all"
+    name="group-member-log-detail"
     for="gs.group.base.interfaces.IGSGroupMarker"
     manager="gs.group.member.list.interfaces.IMemberList"
     class=".viewlet.LogViewlet"
@@ -39,7 +29,7 @@
     file="browser/javascript/detail.js" 
     permission="zope2.Public" />
   <browser:viewlet
-    name="group-member-log-all-js"
+    name="group-member-log-detail-js"
     for="gs.group.base.interfaces.IGSGroupMarker"
     manager="gs.group.member.list.interfaces.IMemberListJavaScript"
     class=".viewlet.LogViewlet"

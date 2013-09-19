@@ -1,6 +1,0 @@
-<div id="gs-group-member-log">
-  <p class="muted">
-    A record of people joining and leaving the group.
-  </p>
-  <p tal:content="structure provider:groupserver.JoinAndLeaveLog">The lists</p>
-</div><!--gs-group-member-log-->
