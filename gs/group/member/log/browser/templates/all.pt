@@ -3,16 +3,32 @@
     This detailed information is only visible to administrators.
     Normal members just see how many people joined and left each month.
   </p>
-  <div class="btn-group">
-    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+  <div id="gs-group-member-log-all-menu" class="dropdown" >
+    <a id="gs-group-member-log-all-menu-button" class="btn dropdown-toggle" 
+       data-toggle="dropdown" href="#">
       Show
       <span class="caret"></span>
     </a>
-    <ul class="dropdown-menu">
-      <li><a href="#">Show all</a></li>
+    <ul id="gs-group-member-log-all-menu-items" class="dropdown-menu" 
+        role="menu" aria-labelledby="gs-group-member-log-all-menu-button">
+      <li>
+        <a id="gs-group-member-log-all-menu-items-all" 
+           class="all" 
+           href="#"><span class="not-tick">&#160;&#160;</span>Show all</a>
+      </li>
       <li class="divider"></li>
-      <li><a href="#">Show just joining</a></li>
-      <li><a href="#">Show just leaving</a></li>
+      <li>
+        <a id="gs-group-member-log-all-menu-items-join" 
+           class="join" 
+           href="#"><span class="not-tick">&#160;&#160;</span>Show just 
+             joining</a>
+      </li>
+      <li>
+        <a id="gs-group-member-log-all-menu-items-leave" 
+           class="leave" 
+           href="#"><span class="not-tick">&#160;&#160;</span>Show just 
+             leaving</a>
+      </li>
     </ul>
   </div>
   <div id="gs-group-member-log-all-list">
@@ -24,8 +40,19 @@
                          numMembersLeft monthLog/numMembersLeft;
                          numMembersJoined monthLog/numMembersJoined;
                          allEvents monthLog/allEvents">
+        <div id="#"
+             tal:condition="python:numMembersLeft == numMembersJoined == 0"
+             tal:attributes="id string:${year}-${month}">
+          <h4 tal:content="label">August 2010</h4>
+          <p>
+            <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
+                               or '%d members' % numMembersMonthEnd"/>
+            <span tal:replace="numMembersLeft"/> left,
+            <span tal:replace="numMembersJoined"/> joined
+          </p>
+        </div>
         <div id="#" class="disclosureWidget monthLog"
-             tal:condition="monthLog"
+             tal:condition="python:not(numMembersLeft == numMembersJoined == 0)"
              tal:attributes="id string:${year}-${month}">
           <h4 tal:content="label">August 2010</h4>
           <p>
@@ -33,7 +60,7 @@
               <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
                                  or '%d members' % numMembersMonthEnd"/>:
               <span class="join-event" 
-                    tal:content="string:${numMembersJoined} joined">3 joined</span><span class="join-event leave-event">,</span>
+                    tal:content="string:${numMembersJoined} joined">3 joined</span><span class="comma">,</span>
               <span class="leave-event" 
                     tal:content="string:${numMembersLeft} left">2 left</span></a>
           </p>
@@ -45,17 +72,6 @@
                 replace="structure event/xhtml"/>
             </ul><!--events-->
           </div>
-        </div>
-        <div id="#"
-             tal:condition="not:monthLog"
-             tal:attributes="id string:${year}-${month}">
-          <h4 tal:content="label">August 2010</h4>
-          <p>
-            <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
-                               or '%d members' % numMembersMonthEnd"/>
-            <span tal:replace="numMembersLeft"/> left,
-            <span tal:replace="numMembersJoined"/> joined
-          </p>
         </div>
       </tal:block>
     </tal:block>

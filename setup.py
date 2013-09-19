@@ -45,6 +45,7 @@ setup(name='gs.group.member.log',
     zip_safe=False,
     install_requires=[
         'setuptools',
+        'zope.browserresource',
         'zope.cachedescriptors',
         'zope.interface',
         'zope.schema',

@@ -24,6 +24,7 @@
     weight="60"
     title="Log"
     permission="zope2.View" />
+  
   <browser:viewlet
     name="group-member-log-all"
     for="gs.group.base.interfaces.IGSGroupMarker"
@@ -32,5 +33,20 @@
     template="browser/templates/all.pt"
     weight="65"
     title="Detailed log"
-    permission="zope2.ManageUsers" />    
+    permission="zope2.ManageUsers" />
+  <browser:resource
+    name="gs-group-member-log-detail-20130919.js" 
+    file="browser/javascript/detail.js" 
+    permission="zope2.Public" />
+  <browser:viewlet
+    name="group-member-log-all-js"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    manager="gs.group.member.list.interfaces.IMemberListJavaScript"
+    class=".viewlet.LogViewlet"
+    template="browser/templates/detail_js.pt"
+    weight="65"
+    title="Detailed log JavaScript"
+    permission="zope2.ManageUsers" />
+  
+
 </configure>
