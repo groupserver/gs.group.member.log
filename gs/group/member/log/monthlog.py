@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -20,7 +20,7 @@ from zope.interface import implements
 from Products.CustomUserFolder.userinfo import userInfo_to_anchor
 from Products.XWFCore.XWFUtils import munge_date
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
-from gs.group.member.leave.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
+from gs.group.member.leave.base.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
 from .interfaces import IMonthLog, IJoinEvent, ILeaveEvent
 
 
