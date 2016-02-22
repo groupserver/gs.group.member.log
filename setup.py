@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ############################################################################
 #
-# Copyright © 2010, 2011, 2012, 2013, 2015 OnlineGroups.net and
+# Copyright © 2010, 2011, 2012, 2013, 2015, 2016 OnlineGroups.net and
 # Contributors.
 #
 # All Rights Reserved.
@@ -70,11 +70,11 @@ setup(
         'zope.viewlet',
         'gs.database',
         'gs.group.base',
+        'gs.group.member.base',
         'gs.group.member.join',
         'gs.group.member.leave.base',
         'gs.group.member.list',
         'Products.CustomUserFolder',
-        'Products.GSGroupMember',
         'Products.XWFCore',
     ],
     entry_points="""
