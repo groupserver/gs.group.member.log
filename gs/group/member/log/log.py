@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2016 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,11 +12,11 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals, print_function
 from datetime import date
 from zope.cachedescriptors.property import Lazy
 from zope.interface import implements
-from Products.GSGroupMember.groupMembersInfo import GSGroupMembersInfo
+from gs.group.member.base import FullMembers
 from .queries import JoinLeaveQuery
 from .monthlog import MonthLog
 from .interfaces import IJoinAndLeaveLog
@@ -30,11 +30,6 @@ class JoinAndLeaveLog(object):
 
     def __init__(self, groupInfo):
         self.groupInfo = groupInfo
-
-    @Lazy
-    def membersInfo(self):
-        retval = GSGroupMembersInfo(self.groupInfo.groupObj)
-        return retval
 
     @Lazy
     def queries(self):
@@ -60,7 +55,7 @@ class JoinAndLeaveLog(object):
         """ The logs for each month, over the appropriate timespan.
         """
         retval = []
-        numMembersMonthEnd = self.membersInfo.fullMemberCount
+        numMembersMonthEnd = len(FullMembers(self.groupInfo.groupObj))
         for year in self.years:
             latestMonth = 12
             earliestMonth = 1
@@ -72,8 +67,7 @@ class JoinAndLeaveLog(object):
                 events = {}
                 if (year in self.events) and (month in self.events[year]):
                     events = self.events[year][month]
-                monthLog = MonthLog(self.groupInfo, year, month,
-                                      numMembersMonthEnd, events)
+                monthLog = MonthLog(self.groupInfo, year, month, numMembersMonthEnd, events)
                 retval.append(monthLog)
                 numMembersMonthEnd = monthLog.numMembersMonthStart
         return retval
