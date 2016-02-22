@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013, 2015 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2015, 2016 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,7 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals, print_function
 from datetime import date
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
@@ -63,14 +63,12 @@ class MonthLog(object):
 
     @Lazy
     def joinEvents(self):
-        retval = [JoinEvent(self.groupInfo, e)
-                    for e in self.events.get(JOIN_SUBSYSTEM, [])]
+        retval = [JoinEvent(self.groupInfo, e) for e in self.events.get(JOIN_SUBSYSTEM, [])]
         return retval
 
     @Lazy
     def leaveEvents(self):
-        retval = [LeaveEvent(self.groupInfo, e)
-                    for e in self.events.get(LEAVE_SUBSYSTEM, [])]
+        retval = [LeaveEvent(self.groupInfo, e) for e in self.events.get(LEAVE_SUBSYSTEM, [])]
         return retval
 
     @Lazy
@@ -85,25 +83,19 @@ class JoinEvent(object):
 
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
-        self.userInfo = \
-          createObject('groupserver.UserFromId',
-            self.groupInfo.groupObj, eDict['user_id'])
+        self.userInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
+                                     eDict['user_id'])
         self.date = eDict['date']
-        self.addingUserInfo = \
-          createObject('groupserver.UserFromId',
-            self.groupInfo.groupObj, eDict['admin_id'])
+        self.addingUserInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
+                                           eDict['admin_id'])
 
     @property
     def xhtml(self):
-        cssClass = u'join-event'
-        retval = u'<li class="%s">%s joined' % \
-          (cssClass, userInfo_to_anchor(self.userInfo))
-        if not(self.addingUserInfo.anonymous) and\
-          (self.addingUserInfo.id != self.userInfo.id):
-            retval = u'%s &#8212; invited by %s' % \
-              (retval, userInfo_to_anchor(self.addingUserInfo))
-        retval = u'%s (%s)' % \
-          (retval, munge_date(self.groupInfo.groupObj, self.date))
+        cssClass = 'join-event'
+        retval = '<li class="%s">%s joined' % (cssClass, userInfo_to_anchor(self.userInfo))
+        if not(self.addingUserInfo.anonymous) and (self.addingUserInfo.id != self.userInfo.id):
+            retval = '%s &#8212; invited by %s' % (retval, userInfo_to_anchor(self.addingUserInfo))
+        retval = '%s (%s)' % (retval, munge_date(self.groupInfo.groupObj, self.date))
         return retval
 
 
@@ -112,23 +104,18 @@ class LeaveEvent(object):
 
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
-        self.userInfo = \
-          createObject('groupserver.UserFromId',
-            self.groupInfo.groupObj, eDict['user_id'])
+        self.userInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
+                                     eDict['user_id'])
         self.date = eDict['date']
-        self.removingUserInfo = \
-          createObject('groupserver.UserFromId',
-            self.groupInfo.groupObj, eDict['admin_id'])
+        self.removingUserInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
+                                             eDict['admin_id'])
 
     @property
     def xhtml(self):
-        cssClass = u'leave-event'
-        retval = u'<li class="%s">%s left' % \
-          (cssClass, userInfo_to_anchor(self.userInfo))
-        if not(self.removingUserInfo.anonymous) and\
-          self.removingUserInfo.id != self.userInfo.id:
-            retval = u'%s &#8212; removed by %s' % \
-              (retval, userInfo_to_anchor(self.removingUserInfo))
-        retval = u'%s (%s)</li>' % \
-          (retval, munge_date(self.groupInfo.groupObj, self.date))
+        cssClass = 'leave-event'
+        retval = '<li class="%s">%s left' % (cssClass, userInfo_to_anchor(self.userInfo))
+        if not(self.removingUserInfo.anonymous) and self.removingUserInfo.id != self.userInfo.id:
+            retval = '%s &#8212; removed by %s' % (retval,
+                                                   userInfo_to_anchor(self.removingUserInfo))
+        retval = '%s (%s)</li>' % (retval, munge_date(self.groupInfo.groupObj, self.date))
         return retval

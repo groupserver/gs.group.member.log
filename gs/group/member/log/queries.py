@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ############################################################################
 #
-# Copyright © 2013, 2015 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2015, 2016 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,6 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ############################################################################
+from __future__ import absolute_import, unicode_literals, print_function
 import sqlalchemy as sa
 from gs.database import getSession, getTable
 from gs.group.member.join.audit import JOIN_GROUP as JOIN, \
@@ -64,10 +65,10 @@ class JoinLeaveQuery(object):
             } for row in r]
         years = {}
         for row in rows:
-            if row['year'] not in years.keys():
+            if row['year'] not in years:
                 years[row['year']] = {}
         for row in rows:
-            if row['month'] not in years[row['year']].keys():
+            if row['month'] not in years[row['year']]:
                 years[row['year']][row['month']] = {
                     JOIN_SUBSYSTEM: [],
                     LEAVE_SUBSYSTEM: []
