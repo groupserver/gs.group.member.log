@@ -16,21 +16,17 @@ from __future__ import absolute_import, unicode_literals, print_function
 from datetime import date
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
-from zope.interface import implements
 from Products.CustomUserFolder.userinfo import userInfo_to_anchor
 from Products.XWFCore.XWFUtils import munge_date
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
 from gs.group.member.leave.base.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
-from .interfaces import IMonthLog, IJoinEvent, ILeaveEvent
 
 
 class MonthLog(object):
-    implements(IMonthLog)
-    """ A class that implements the IMonthLog interface, and
-        therefore knows all the joining and leaving for
-        one particular month
-    """
+    """The log for a month
 
+A class that implements the :class:`.interfaces.IMonthLog` interface, and therefore knows all the
+joining and leaving for one particular month."""
     def __init__(self, groupInfo, year, month, numMembersMonthEnd, events):
         self.groupInfo = groupInfo
         self.year = year
@@ -79,8 +75,6 @@ class MonthLog(object):
 
 
 class JoinEvent(object):
-    implements(IJoinEvent)
-
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
         self.userInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
@@ -100,8 +94,6 @@ class JoinEvent(object):
 
 
 class LeaveEvent(object):
-    implements(ILeaveEvent)
-
     def __init__(self, groupInfo, eDict):
         self.groupInfo = groupInfo
         self.userInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,

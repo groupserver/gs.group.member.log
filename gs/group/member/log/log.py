@@ -15,15 +15,12 @@
 from __future__ import absolute_import, unicode_literals, print_function
 from datetime import date
 from zope.cachedescriptors.property import Lazy
-from zope.interface import implements
 from gs.group.member.base import FullMembers
 from .queries import JoinLeaveQuery
 from .monthlog import MonthLog
-from .interfaces import IJoinAndLeaveLog
 
 
 class JoinAndLeaveLog(object):
-    implements(IJoinAndLeaveLog)
     """ A log of how many members have joined and left
         over each month.
     """

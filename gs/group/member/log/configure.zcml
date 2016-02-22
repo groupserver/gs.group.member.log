@@ -38,5 +38,17 @@
     title="Detailed log JavaScript"
     permission="zope2.ManageUsers" />
 
-
+  <!--Some Zope Component Architecture definitions-->
+  <class class=".log.JoinAndLeaveLog">
+    <implements interface=".interfaces.IJoinAndLeaveLog" />
+  </class>
+  <class class=".monthlog.MonthLog">
+    <implements interface=".interfaces.IMonthLog" />
+  </class>
+  <class class=".monthlog.JoinEvent">
+    <implements interface=".interfaces.IJoinEvent" />
+  </class>
+  <class class=".monthlog.LeaveEvent">
+    <implements interface=".interfaces.ILeaveEvent" />
+  </class>
 </configure>
