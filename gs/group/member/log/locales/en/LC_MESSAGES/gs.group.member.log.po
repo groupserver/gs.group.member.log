@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2016-02-24 20:44+0000\n"
-"PO-Revision-Date: 2016-02-24 12:45-0800\n"
+"POT-Creation-Date: 2016-02-24 20:52+0000\n"
+"PO-Revision-Date: 2016-02-24 12:54-0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +14,36 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
+#. Default: "This detailed information is only visible to administrators. Normal members just see how many people joined and left each month."
+#: ./browser/templates/detail.pt:5
+msgid "detail-intro"
+msgstr "This detailed information is only visible to administrators. Normal members just see how many people joined and left each month."
+
+#. Default: "No join or leave events to display."
+#: ./browser/templates/detail.pt:99
+msgid "detail-none"
+msgstr "No join or leave events to display."
+
+#. Default: "Show ${arrow}"
+#: ./browser/templates/detail.pt:12
+msgid "detail-show-button"
+msgstr "Show ${arrow}"
+
+#. Default: "${tick}Show all"
+#: ./browser/templates/detail.pt:20
+msgid "detail-show-button-all"
+msgstr "${tick}Show all"
+
+#. Default: "${tick}Show just joining"
+#: ./browser/templates/detail.pt:28
+msgid "detail-show-button-join"
+msgstr "${tick}Show just joining"
+
+#. Default: "${tick}Show just leaving"
+#: ./browser/templates/detail.pt:36
+msgid "detail-show-button-leave"
+msgstr "${tick}Show just leaving"
+
 #. Default: "Detailed log"
 #: ./viewlet.py:44
 msgid "detail-title"
@@ -22,7 +52,7 @@ msgstr "Detailed log"
 #. Default: "${userName} joined &#8212; invited by ${adminName} (${date})"
 #: ./monthlog.py:94
 msgid "event-join-admin"
-msgstr "{userName} joined &#8212; invited by ${adminName} (${date})"
+msgstr "${userName} joined &#8212; invited by ${adminName} (${date})"
 
 #. Default: "${userName} joined (${date})"
 #: ./monthlog.py:100
@@ -40,21 +70,25 @@ msgid "event-leave-other"
 msgstr "${userName} removed by ${adminName} (${date})"
 
 #. Default: "${n} members:"
+#: ./browser/templates/detail.pt:60
 #: ./browser/templates/summary.pt:12
 msgid "summary-all-members-n"
-msgstr "{n} members:"
+msgstr "${n} members:"
 
 #. Default: "One member:"
+#: ./browser/templates/detail.pt:56
 #: ./browser/templates/summary.pt:8
 msgid "summary-all-members-one"
 msgstr "One member:"
 
 #. Default: "${n} joined,"
+#: ./browser/templates/detail.pt:63
 #: ./browser/templates/summary.pt:16
 msgid "summary-joined"
 msgstr "${n} joined,"
 
 #. Default: "${n} left."
+#: ./browser/templates/detail.pt:66
 #: ./browser/templates/summary.pt:20
 msgid "summary-left"
 msgstr "${n} left."

@@ -1,6 +1,7 @@
 <div id="gs-group-member-log-all"
      xmlns:tal="http://xml.zope.org/namespaces/tal"
-     xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="gs.group.member.log">
   <p class="muted intro" i18n:translate="detail-intro">
     This detailed information is only visible to administrators.
     Normal members just see how many people joined and left each month.
@@ -23,7 +24,7 @@
       <li>
         <a id="gs-group-member-log-all-menu-items-join"
            class="join"
-           i18n:translate="detail-show-button-all"
+           i18n:translate="detail-show-button-join"
            href="#"><span class="not-tick"
                           i18n:name="tick">&#160;&#160;</span>Show just
              joining</a>
