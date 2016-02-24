@@ -1,13 +1,14 @@
-// Copyright © 2013 OnlineGroups.net and Contributors.
+'use strict';
+// Copyright © 2013, 2016 OnlineGroups.net and Contributors.
 // All Rights Reserved.
 //
 // This software is subject to the provisions of the Zope Public License,
-// Version 2.1 (ZPL). A copy of the ZPL is avaliable at 
+// Version 2.1 (ZPL). A copy of the ZPL is avaliable at
 //  <http://groupserver.org/downloads/license/>
 
 jQuery.noConflict();
 
-function GSMemberLog (menuId, listId) {
+function GSMemberLog(menuId, listId) {
     var menu = null, list = null, joinShown = true, leaveShown = true,
         TICK = '<span class="tick">&#10003;&#160;</span>',
         NOT_TICK = '<span class="not-tick">&#160;&#160;</span>';
@@ -50,10 +51,10 @@ function GSMemberLog (menuId, listId) {
 
     function show_all(event) {
         remove_tick(menu.find('li a'));
-        if ( !joinShown ) {
+        if (!joinShown) {
             show_join();
         }
-        if ( !leaveShown ) {
+        if (!leaveShown) {
             show_leave();
         }
         show_comma();
@@ -90,12 +91,11 @@ function GSMemberLog (menuId, listId) {
     }
     init(); // Note the automatic execution.
 
-    return {
-    }
+    return {};
 }
 
-jQuery(window).ready(function () {
+jQuery(window).ready(function() {
     var log = null;
-    log = GSMemberLog('#gs-group-member-log-all-menu', 
+    log = GSMemberLog('#gs-group-member-log-all-menu',
                       '#gs-group-member-log-all-list');
 });
