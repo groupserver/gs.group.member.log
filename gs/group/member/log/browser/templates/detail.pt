@@ -4,29 +4,29 @@
     Normal members just see how many people joined and left each month.
   </p>
   <div id="gs-group-member-log-all-menu" class="dropdown" >
-    <a id="gs-group-member-log-all-menu-button" class="btn dropdown-toggle" 
+    <a id="gs-group-member-log-all-menu-button" class="btn dropdown-toggle"
        data-toggle="dropdown" href="#">
       Show
       <span class="caret"></span>
     </a>
-    <ul id="gs-group-member-log-all-menu-items" class="dropdown-menu" 
+    <ul id="gs-group-member-log-all-menu-items" class="dropdown-menu"
         role="menu" aria-labelledby="gs-group-member-log-all-menu-button">
       <li>
-        <a id="gs-group-member-log-all-menu-items-all" 
-           class="all" 
+        <a id="gs-group-member-log-all-menu-items-all"
+           class="all"
            href="#"><span class="not-tick">&#160;&#160;</span>Show all</a>
       </li>
       <li class="divider"></li>
       <li>
-        <a id="gs-group-member-log-all-menu-items-join" 
-           class="join" 
-           href="#"><span class="not-tick">&#160;&#160;</span>Show just 
+        <a id="gs-group-member-log-all-menu-items-join"
+           class="join"
+           href="#"><span class="not-tick">&#160;&#160;</span>Show just
              joining</a>
       </li>
       <li>
-        <a id="gs-group-member-log-all-menu-items-leave" 
-           class="leave" 
-           href="#"><span class="not-tick">&#160;&#160;</span>Show just 
+        <a id="gs-group-member-log-all-menu-items-leave"
+           class="leave"
+           href="#"><span class="not-tick">&#160;&#160;</span>Show just
              leaving</a>
       </li>
     </ul>
@@ -45,7 +45,7 @@
              tal:attributes="id string:${year}-${month}">
           <h4 tal:content="label">August 2010</h4>
           <p>
-            <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
+            <span tal:replace="python:numMembersMonthEnd==1 and '1 member'
                                or '%d members' % numMembersMonthEnd"/>
             <span tal:replace="numMembersLeft"/> left,
             <span tal:replace="numMembersJoined"/> joined
@@ -57,17 +57,17 @@
           <h4 tal:content="label">August 2010</h4>
           <p>
             <a href="#" class="disclosureButton">
-              <span tal:replace="python:numMembersMonthEnd==1 and '1 member' 
+              <span tal:replace="python:numMembersMonthEnd==1 and '1 member'
                                  or '%d members' % numMembersMonthEnd"/>:
-              <span class="join-event" 
+              <span class="join-event"
                     tal:content="string:${numMembersJoined} joined">3 joined</span><span class="comma">,</span>
-              <span class="leave-event" 
+              <span class="leave-event"
                     tal:content="string:${numMembersLeft} left">2 left</span></a>
           </p>
           <div class="disclosureShowHide" style="display: None;">
             <ul id="events" class="events"
                 tal:attributes="id string:${year}-${month}-events">
-              <tal:block 
+              <tal:block
                 repeat="event allEvents"
                 replace="structure event/xhtml"/>
             </ul><!--events-->
@@ -76,7 +76,7 @@
       </tal:block>
     </tal:block>
   </div><!--gs-group-member-log-all-list-->
-  <div id="gs-group-member-log-all-none" 
+  <div id="gs-group-member-log-all-none"
        tal:condition="not:view/log/monthLogs">
     <p>No join or leave events to display.</p>
   </div><!--gs-group-member-log-all-none-->
