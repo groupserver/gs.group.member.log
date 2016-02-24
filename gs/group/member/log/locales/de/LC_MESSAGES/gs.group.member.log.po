@@ -1,20 +1,24 @@
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gs.group.member.log\n"
 "POT-Creation-Date: 2016-02-24 20:52+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: 2016-02-24 20:59+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: German (http://www.transifex.com/groupserver/gs-group-member-log/language/de/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Domain: DOMAIN\n"
+"Language: de\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
 
-#. Default: "This detailed information is only visible to administrators. Normal members just see how many people joined and left each month."
+#. Default: "This detailed information is only visible to administrators.
+#. Normal members just see how many people joined and left each month."
 #: ./browser/templates/detail.pt:5
 msgid "detail-intro"
 msgstr ""
@@ -70,26 +74,22 @@ msgid "event-leave-other"
 msgstr ""
 
 #. Default: "${n} members:"
-#: ./browser/templates/detail.pt:60
-#: ./browser/templates/summary.pt:12
+#: ./browser/templates/detail.pt:60 ./browser/templates/summary.pt:12
 msgid "summary-all-members-n"
 msgstr ""
 
 #. Default: "One member:"
-#: ./browser/templates/detail.pt:56
-#: ./browser/templates/summary.pt:8
+#: ./browser/templates/detail.pt:56 ./browser/templates/summary.pt:8
 msgid "summary-all-members-one"
 msgstr ""
 
 #. Default: "${n} joined,"
-#: ./browser/templates/detail.pt:63
-#: ./browser/templates/summary.pt:16
+#: ./browser/templates/detail.pt:63 ./browser/templates/summary.pt:16
 msgid "summary-joined"
 msgstr ""
 
 #. Default: "${n} left."
-#: ./browser/templates/detail.pt:66
-#: ./browser/templates/summary.pt:20
+#: ./browser/templates/detail.pt:66 ./browser/templates/summary.pt:20
 msgid "summary-left"
 msgstr ""
 
@@ -102,4 +102,3 @@ msgstr ""
 #: ./viewlet.py:37
 msgid "summary-title"
 msgstr ""
-

@@ -1,13 +1,12 @@
 =======================
 ``gs.group.member.log``
 =======================
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-List the members of a GroupServer group
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The changing membership of a GroupServer group
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 :Author: `Michael JasonSmith`_
 :Contact: Michael JasonSmith <mpj17@onlinegroups.net>
-:Date: 2015-06-15
+:Date: 2016-02-24
 :Organization: `GroupServer.org`_
 :Copyright: This document is licensed under a
   `Creative Commons Attribution-Share Alike 4.0 International License`_
@@ -19,9 +18,9 @@ List the members of a GroupServer group
 Introduction
 ============
 
-This part of the code provides two viewlets_ that provide a log
-of who has joined and left a group. The viewlets are registered
-for the *Members* page [#list]_.
+This product provides two viewlets_ that provide a log of who has
+joined and left a group. The viewlets are registered for the
+*Members* page [#list]_.
 
 Viewlets
 ========
@@ -80,6 +79,8 @@ client-side code to power the menu on the detailed viewlet.
 Resources
 =========
 
+- Translations:
+  https://www.transifex.com/groupserver/gs-group-member-log/
 - Code repository:
   https://github.com/groupserver/gs.group.member.log
 - Questions and comments to
