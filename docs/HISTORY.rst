@@ -1,6 +1,16 @@
 Changelog
 =========
 
+3.1.0 (2016-02-24)
+------------------
+
+* Adding internationalisation support
+* Adding unit tests
+* Following the changes to `gs.group.member.base`_
+
+.. _gs.group.member.base:
+   https://github.com/groupserver/gs.group.member.base
+
 3.0.1 (2015-06-15)
 ------------------
 
@@ -8,7 +18,6 @@ Changelog
 * Pointing to GitHub_ as the primary repository
 * Following the change of the leave-code to
   `gs.group.member.leave.base`_
-
 .. _GitHub:
    https://github.com/groupserver/gs.group.member.log
 .. _gs.group.member.leave.base:
