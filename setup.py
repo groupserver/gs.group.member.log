@@ -63,6 +63,7 @@ setup(
         'zope.browserresource',
         'zope.cachedescriptors',
         'zope.component',
+        'zope.i18nmessageid[compile]',
         'zope.interface',
         'zope.schema',
         'zope.tal',
@@ -77,6 +78,8 @@ setup(
         'Products.CustomUserFolder',
         'Products.XWFCore',
     ],
+    test_suite="{0}.tests.test_all".format(name),
+    tests_require=['mock', ],
     entry_points="""
     # -*- Entry points: -*-
     """, )
