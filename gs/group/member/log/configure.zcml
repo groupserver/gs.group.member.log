@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
-           i18n_domain="groupserver">
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="gs.group.member.log">
 
   <include package="zope.viewlet" file="meta.zcml" />
+  <i18n:registerTranslations directory="locales" />
 
   <browser:viewlet
     name="group-member-log-summary"
     for="gs.group.base.interfaces.IGSGroupMarker"
     manager="gs.group.member.list.interfaces.IMemberList"
-    class=".viewlet.LogViewlet"
+    class=".viewlet.SummaryViewlet"
     template="browser/templates/summary.pt"
     weight="60"
-    title="Log"
     permission="zope2.View" />
-
   <browser:viewlet
     name="group-member-log-detail"
     for="gs.group.base.interfaces.IGSGroupMarker"
     manager="gs.group.member.list.interfaces.IMemberList"
-    class=".viewlet.LogViewlet"
+    class=".viewlet.DetailViewlet"
     template="browser/templates/detail.pt"
     weight="65"
-    title="Detailed log"
     permission="zope2.ManageUsers" />
   <browser:resource
     name="gs-group-member-log-detail-20130919.js"

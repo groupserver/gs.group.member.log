@@ -16,6 +16,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 from zope.cachedescriptors.property import Lazy
 from gs.group.base import GroupViewlet
 from .log import JoinAndLeaveLog
+from . import GSMessageFactory as _
 
 
 class LogViewlet(GroupViewlet):
@@ -27,3 +28,17 @@ class LogViewlet(GroupViewlet):
     def log(self):
         retval = JoinAndLeaveLog(self.groupInfo)
         return retval
+
+
+class SummaryViewlet(LogViewlet):
+
+    def __init__(self, group, request, view, manager):
+        super(SummaryViewlet, self).__init__(group, request, view, manager)
+        self.title = _('summary-title', 'Log')
+
+
+class DetailViewlet(LogViewlet):
+
+    def __init__(self, group, request, view, manager):
+        super(DetailViewlet, self).__init__(group, request, view, manager)
+        self.title = _('detail-title', 'Detailed log')

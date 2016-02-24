@@ -1,14 +1,28 @@
-<div id="gs-group-member-log-summary">
+<div id="gs-group-member-log-summary"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="gs.group.member.log">
   <div tal:repeat="monthLog view/log/monthLogs">
     <h4 tal:content="monthLog/label">August 2010</h4>
     <p>
-      <span tal:replace="python:monthLog.numMembersMonthEnd==1 and '1 member' 
-                         or '%d members' % monthLog.numMembersMonthEnd"/>:
-      <span tal:replace="monthLog/numMembersJoined"/> joined,
-      <span tal:replace="monthLog/numMembersLeft"/> left
+      <span tal:condition="python:monthLog.numMembersMonthEnd==1"
+            i18n:translate="summary-all-members-one">One member:</span>
+      <span tal:condition="python:monthLog.numMembersMonthEnd!=1"
+            i18n:translate="summary-all-members-n">
+        <span i18n:name="n"
+              tal:content="monthLog/numMembersMonthEnd"/> members:
+      </span>
+      <span i18n:translate="summary-joined">
+        <span i18n:name="n"
+              tal:content="monthLog/numMembersJoined"/> joined,
+      </span>
+      <span i18n:translate="summary-left">
+        <span i18n:name="n" tal:content="monthLog/numMembersLeft"/> left.
+      </span>
     </p>
   </div>
-  <div tal:condition="not:view/log/monthLogs">
-    <p>No join or leave events to display.</p>
+  <div tal:condition="not:view/log/monthLogs"
+       i18n:translate="summary-no-events">
+    <p>Nobody joined or left the group.</p>
   </div>
 </div>

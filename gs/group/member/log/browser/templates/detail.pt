@@ -1,32 +1,39 @@
-<div id="gs-group-member-log-all">
-  <p class="muted">
+<div id="gs-group-member-log-all"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+  <p class="muted intro" i18n:translate="detail-intro">
     This detailed information is only visible to administrators.
     Normal members just see how many people joined and left each month.
   </p>
   <div id="gs-group-member-log-all-menu" class="dropdown" >
     <a id="gs-group-member-log-all-menu-button" class="btn dropdown-toggle"
-       data-toggle="dropdown" href="#">
-      Show
-      <span class="caret"></span>
+       data-toggle="dropdown" href="#" i18n:translate="detail-show-button">
+      Show <span i18n:name="arrow" class="caret"></span>
     </a>
     <ul id="gs-group-member-log-all-menu-items" class="dropdown-menu"
         role="menu" aria-labelledby="gs-group-member-log-all-menu-button">
       <li>
         <a id="gs-group-member-log-all-menu-items-all"
+           i18n:translate="detail-show-button-all"
            class="all"
-           href="#"><span class="not-tick">&#160;&#160;</span>Show all</a>
+           href="#"><span class="not-tick"
+                          i18n:name="tick">&#160;&#160;</span>Show all</a>
       </li>
       <li class="divider"></li>
       <li>
         <a id="gs-group-member-log-all-menu-items-join"
            class="join"
-           href="#"><span class="not-tick">&#160;&#160;</span>Show just
+           i18n:translate="detail-show-button-all"
+           href="#"><span class="not-tick"
+                          i18n:name="tick">&#160;&#160;</span>Show just
              joining</a>
       </li>
       <li>
         <a id="gs-group-member-log-all-menu-items-leave"
            class="leave"
-           href="#"><span class="not-tick">&#160;&#160;</span>Show just
+           i18n:translate="detail-show-button-leave"
+           href="#"><span class="not-tick"
+                          i18n:name="tick">&#160;&#160;</span>Show just
              leaving</a>
       </li>
     </ul>
@@ -45,10 +52,18 @@
              tal:attributes="id string:${year}-${month}">
           <h4 tal:content="label">August 2010</h4>
           <p>
-            <span tal:replace="python:numMembersMonthEnd==1 and '1 member'
-                               or '%d members' % numMembersMonthEnd"/>
-            <span tal:replace="numMembersLeft"/> left,
-            <span tal:replace="numMembersJoined"/> joined
+            <span tal:condition="python:numMembersMonthEnd==1"
+                  i18n:translate="summary-all-members-one">One member:</span>
+            <span tal:condition="python:numMembersMonthEnd!=1"
+                  i18n:translate="summary-all-members-n">
+              <span i18n:name="n" tal:content="numMembersMonthEnd"/> members:
+            </span>
+            <span i18n:translate="summary-joined">
+              <span i18n:name="n" tal:content="numMembersJoined"/> joined,
+            </span>
+            <span i18n:translate="summary-left">
+              <span i18n:name="n" tal:content="numMembersLeft"/> left.
+            </span>
           </p>
         </div>
         <div id="#" class="disclosureWidget monthLog"
@@ -68,8 +83,10 @@
             <ul id="events" class="events"
                 tal:attributes="id string:${year}-${month}-events">
               <tal:block
-                repeat="event allEvents"
-                replace="structure event/xhtml"/>
+                repeat="event allEvents">
+                <li tal:attributes="class event/css"
+                    tal:content="structure event/xhtml">Item</li>
+              </tal:block>
             </ul><!--events-->
           </div>
         </div>
@@ -78,6 +95,6 @@
   </div><!--gs-group-member-log-all-list-->
   <div id="gs-group-member-log-all-none"
        tal:condition="not:view/log/monthLogs">
-    <p>No join or leave events to display.</p>
+    <p i18n:translate="detail-none">No join or leave events to display.</p>
   </div><!--gs-group-member-log-all-none-->
 </div><!--gs-group-member-log-all-->

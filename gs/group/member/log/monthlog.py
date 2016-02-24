@@ -20,6 +20,7 @@ from Products.CustomUserFolder.userinfo import userInfo_to_anchor
 from Products.XWFCore.XWFUtils import munge_date
 from gs.group.member.join.audit import SUBSYSTEM as JOIN_SUBSYSTEM
 from gs.group.member.leave.base.audit import SUBSYSTEM as LEAVE_SUBSYSTEM
+from . import GSMessageFactory as _
 
 
 class MonthLog(object):
@@ -83,13 +84,21 @@ class JoinEvent(object):
         self.addingUserInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
                                            eDict['admin_id'])
 
+        self.css = 'join-event'
+
     @property
     def xhtml(self):
-        cssClass = 'join-event'
-        retval = '<li class="%s">%s joined' % (cssClass, userInfo_to_anchor(self.userInfo))
+        d = munge_date(self.groupInfo.groupObj, self.date)
+        ui = userInfo_to_anchor(self.userInfo)
         if not(self.addingUserInfo.anonymous) and (self.addingUserInfo.id != self.userInfo.id):
-            retval = '%s &#8212; invited by %s' % (retval, userInfo_to_anchor(self.addingUserInfo))
-        retval = '%s (%s)' % (retval, munge_date(self.groupInfo.groupObj, self.date))
+            retval = _('event-join-admin',
+                       '${userName} joined &#8212; invited by ${adminName} (${date})',
+                       mapping={'userName': ui,
+                                'adminName': userInfo_to_anchor(self.addingUserInfo),
+                                'date': d, })
+        else:
+            retval = _('event-join-normal', '${userName} joined (${date})',
+                       mapping={'userName': ui, 'date': d, })
         return retval
 
 
@@ -101,13 +110,18 @@ class LeaveEvent(object):
         self.date = eDict['date']
         self.removingUserInfo = createObject('groupserver.UserFromId', self.groupInfo.groupObj,
                                              eDict['admin_id'])
+        self.css = 'leave-event'
 
     @property
     def xhtml(self):
-        cssClass = 'leave-event'
-        retval = '<li class="%s">%s left' % (cssClass, userInfo_to_anchor(self.userInfo))
+        d = munge_date(self.groupInfo.groupObj, self.date)
+        ui = userInfo_to_anchor(self.userInfo)
         if not(self.removingUserInfo.anonymous) and self.removingUserInfo.id != self.userInfo.id:
-            retval = '%s &#8212; removed by %s' % (retval,
-                                                   userInfo_to_anchor(self.removingUserInfo))
-        retval = '%s (%s)</li>' % (retval, munge_date(self.groupInfo.groupObj, self.date))
+            retval = _('event-leave-other', '${userName} removed by ${adminName} (${date})',
+                       mapping={'userName': ui,
+                                'adminName': userInfo_to_anchor(self.removingUserInfo),
+                                'date': d, })
+        else:
+            retval = _('event-leave-normal', '${userName} left (${date})',
+                       mapping={'userName': ui, 'date': d, })
         return retval
