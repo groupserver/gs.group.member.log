@@ -1,11 +1,12 @@
 # 
 # Translators:
+# Stephan G. Blendinger <stephanblendinger@me.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: gs.group.member.log\n"
 "POT-Creation-Date: 2016-02-24 20:52+0000\n"
-"PO-Revision-Date: 2016-02-24 20:59+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-06-05 13:27+0000\n"
+"Last-Translator: Stephan G. Blendinger <stephanblendinger@me.com>\n"
 "Language-Team: German (http://www.transifex.com/groupserver/gs-group-member-log/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,84 +22,84 @@ msgstr ""
 #. Normal members just see how many people joined and left each month."
 #: ./browser/templates/detail.pt:5
 msgid "detail-intro"
-msgstr ""
+msgstr "Die detaillierten Informationen sind nur für Administratoren zugänglich. Normale Mitglieder können lediglich sehen, wieviele Nutzer monatlich beitreten und austreten. "
 
 #. Default: "No join or leave events to display."
 #: ./browser/templates/detail.pt:99
 msgid "detail-none"
-msgstr ""
+msgstr "Keine Betritte und Austritte zum Anzeigen verfügbar."
 
 #. Default: "Show ${arrow}"
 #: ./browser/templates/detail.pt:12
 msgid "detail-show-button"
-msgstr ""
+msgstr "Anzeigen ${arrow}"
 
 #. Default: "${tick}Show all"
 #: ./browser/templates/detail.pt:20
 msgid "detail-show-button-all"
-msgstr ""
+msgstr "${tick}Alle anzeigen"
 
 #. Default: "${tick}Show just joining"
 #: ./browser/templates/detail.pt:28
 msgid "detail-show-button-join"
-msgstr ""
+msgstr "${tick}Zeige nur beigetretene Mitglieder"
 
 #. Default: "${tick}Show just leaving"
 #: ./browser/templates/detail.pt:36
 msgid "detail-show-button-leave"
-msgstr ""
+msgstr "${tick}Zeige nur ausgetretene Mitglieder"
 
 #. Default: "Detailed log"
 #: ./viewlet.py:44
 msgid "detail-title"
-msgstr ""
+msgstr "Detailliertes Protokoll"
 
 #. Default: "${userName} joined &#8212; invited by ${adminName} (${date})"
 #: ./monthlog.py:94
 msgid "event-join-admin"
-msgstr ""
+msgstr "${userName} beigetreten &#8212; eingeladen von ${adminName} (${date})"
 
 #. Default: "${userName} joined (${date})"
 #: ./monthlog.py:100
 msgid "event-join-normal"
-msgstr ""
+msgstr "${userName} beigetreten (${date})"
 
 #. Default: "${userName} left (${date})"
 #: ./monthlog.py:125
 msgid "event-leave-normal"
-msgstr ""
+msgstr "${userName} verlassen (${date})"
 
 #. Default: "${userName} removed by ${adminName} (${date})"
 #: ./monthlog.py:120
 msgid "event-leave-other"
-msgstr ""
+msgstr "${userName} entfernt von ${adminName} (${date})"
 
 #. Default: "${n} members:"
 #: ./browser/templates/detail.pt:60 ./browser/templates/summary.pt:12
 msgid "summary-all-members-n"
-msgstr ""
+msgstr "${n} Mitglieder:"
 
 #. Default: "One member:"
 #: ./browser/templates/detail.pt:56 ./browser/templates/summary.pt:8
 msgid "summary-all-members-one"
-msgstr ""
+msgstr "Ein Mitglied:"
 
 #. Default: "${n} joined,"
 #: ./browser/templates/detail.pt:63 ./browser/templates/summary.pt:16
 msgid "summary-joined"
-msgstr ""
+msgstr "${n} beigetreten,"
 
 #. Default: "${n} left."
 #: ./browser/templates/detail.pt:66 ./browser/templates/summary.pt:20
 msgid "summary-left"
-msgstr ""
+msgstr "${n} verlassen."
 
 #. Default: "<p>Nobody joined or left the group.</p>"
 #: ./browser/templates/summary.pt:24
 msgid "summary-no-events"
-msgstr ""
+msgstr "<p>Niemand ist der Gruppe beigetreten oder hat diese verlassen.</p>"
 
 #. Default: "Log"
 #: ./viewlet.py:37
 msgid "summary-title"
-msgstr ""
+msgstr "Protokoll"
